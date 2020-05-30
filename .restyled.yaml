@@ -1,0 +1,5 @@
+enabled: true
+pull_request: true
+request_review: owner
+restylers:
+    - prettier
