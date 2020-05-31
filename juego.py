@@ -13,7 +13,6 @@ from bloque.clases import bloque_base
 from enemigos.clases import enemigo_base
 from jugador.clases.jugador import Jugador
 
-en_juego = True
 jugador = Jugador([0, 0])
 jugadores.add(jugador)
 if __name__ == "__main__":
