@@ -6,15 +6,16 @@
 # - mantener coherencia entre plural y singular
 # - tratar de no subir word, psd, fsd, o cualquier extension o archivo compilado
 import pygame
-
 from ambiente.constantes import *
 from ambiente.globales import *
 from bloque.clases import bloque_base
-from enemigos.clases import enemigo_base
+from enemigos.clases.enemigo_base import Enemigo_base
 from jugador.clases.jugador import Jugador
 
 jugador = Jugador([0, 0])
+enemigo = Enemigo_base([80, 80])
 jugadores.add(jugador)
+enemigos.add(enemigo)
 if __name__ == "__main__":
     pygame.init()
     ventana = pygame.display.set_mode([ANCHO, ALTO])
@@ -23,6 +24,8 @@ if __name__ == "__main__":
             if evento.type == pygame.QUIT:
                 en_juego = False
         jugadores.update()
+        enemigos.update()
         ventana.fill(NEGRO)
         jugadores.draw(ventana)
+        enemigos.draw(ventana)
         pygame.display.flip()

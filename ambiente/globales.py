@@ -5,6 +5,7 @@ import pygame
 
 # SPRITE GROUPS
 jugadores = pygame.sprite.Group()
+enemigos = pygame.sprite.Group()
 
 # CICLO DE JUEGO
 en_juego = True
