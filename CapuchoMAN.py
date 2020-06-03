@@ -12,10 +12,11 @@ from bloque.clases import bloque_base
 from enemigos.clases.enemigo_base import Enemigo_base
 from jugador.clases.jugador import Jugador
 
-jugador = Jugador([0, 0])
+jugador = Jugador([0, 500])
 enemigo = Enemigo_base([80, 80])
 jugadores.add(jugador)
 enemigos.add(enemigo)
+
 if __name__ == "__main__":
     pygame.init()
     ventana = pygame.display.set_mode([ANCHO, ALTO])
@@ -23,6 +24,8 @@ if __name__ == "__main__":
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
                 en_juego = False
+            jugador.controles(evento)
+
         jugadores.update()
         enemigos.update()
         ventana.fill(NEGRO)
