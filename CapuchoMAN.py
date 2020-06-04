@@ -6,14 +6,15 @@
 # - mantener coherencia entre plural y singular
 # - tratar de no subir word, psd, fsd, o cualquier extension o archivo compilado
 import pygame
-from ambiente.constantes import *
-from ambiente.globales import *
-from ambiente import ambiente
+
+from motor.constantes import *
+from motor.globales import *
+import motor.ambiente as amb
 from bloque.clases.bloque_base import Bloque_base
 from jugador.clases.jugador import Jugador
 
-jugador = Jugador([0, 500])
-bloque = Bloque_base([80, 80])
+jugador = Jugador([400, 500])
+bloque = Bloque_base([400, 450])
 jugadores.add(jugador)
 bloques.add(bloque)
 if __name__ == "__main__":
@@ -24,5 +25,7 @@ if __name__ == "__main__":
             if evento.type == pygame.QUIT:
                 en_juego = False
             jugador.controles(evento)
+        lista_colision = pygame.sprite.spritecollide(jugador, bloques, False)
         elementos_dibujar = [bloques, jugadores]
-        ambiente.ciclo_juego(ventana, elementos_dibujar)
+        amb.control_colision(lista_colision, jugador)
+        amb.ciclo_juego(ventana, elementos_dibujar)
