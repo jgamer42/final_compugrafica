@@ -1,7 +1,7 @@
 import pygame
 
 
-def crear_sprite(sabana, size, frames, filas=1, opcion=None):
+def crear_sprite(sabana, dimensiones, cuadros, filas=1, opcion=None):
     """
     Funcion para recorte de sprites
     sabana: imagen con los graficos
@@ -10,29 +10,43 @@ def crear_sprite(sabana, size, frames, filas=1, opcion=None):
     filas: filas de lasabana (default 1)
     opcion: optiene una matriz con el parametro "matriz" (default None)
     """
+    ancho_cuadros = dimensiones[0]
+    alto_cuadros = dimensiones[1]
     animacion = []
+    # Recorta como fila
     if filas == 1:
-        for c in range(frames):
-            cuadro = sabana.subsurface(size[0] * c, 0, size[0], size[1])
+        for cuadro in range(cuadros):
+            cuadro = sabana.subsurface(ancho_cuadros * cuadro, 0,
+                                       ancho_cuadros, alto_cuadros)
             animacion.append(cuadro)
+    # recorta como matricez
     elif filas > 1 and opcion == "matriz":
         for f in range(filas):
             fila = []
-            for c in range(frames):
-                cuadro = sabana.subsurface(size[0] * c, size[1] * f, size[0],
-                                           size[1])
+            for cuadro in range(cuadros):
+                cuadro = sabana.subsurface(
+                    ancho_cuadros * cuadro,
+                    alto_cuadros * f,
+                    ancho_cuadros,
+                    alto_cuadros,
+                )
                 fila.append(cuadro)
             animacion.append(fila)
+    # recorta una sabana matriz como una fila
     elif filas > 1 and opcion == None:
-        for f in range(filas):
-            for c in range(frames):
-                cuadro = sabana.subsurface(size[0] * c, size[1] * f, size[0],
-                                           size[1])
+        for fila in range(filas):
+            for cuadro in range(cuadros):
+                cuadro = sabana.subsurface(
+                    ancho_cuadros * cuadro,
+                    alto_cuadros * fila,
+                    ancho_cuadros,
+                    alto_cuadros,
+                )
                 animacion.append(cuadro)
     return animacion
 
 
-def next_frame(frame_actual, numero_frames):
+def animar(frame_actual, numero_frames):
     if frame_actual < (numero_frames - 1):
         frame_actual += 1
     else:

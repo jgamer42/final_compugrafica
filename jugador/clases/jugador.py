@@ -1,10 +1,9 @@
+from utilidades import *
+from constantes import *
 import math
 import os
 import sys
-
 import pygame
-from constantes import *
-from utilidades import *
 
 sys.path.append(os.getcwd() + "/ambiente/")
 
@@ -15,9 +14,6 @@ class Jugador(pygame.sprite.Sprite):
         self.vidas = 3
         self.salud = 1000
         self.puntos = 0
-        self.speed = False
-        self.salto = False
-
         self.animacion = self.crear_animacion()
         self.frame = 0
         self.direccion = 0
@@ -25,66 +21,52 @@ class Jugador(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = pos[0]
         self.rect.y = pos[1]
-
         self.velx = 0
         self.vely = 0
+        self.estados = {"saltando": False, "corriendo": False}
 
     def update(self):
-        self.frame = next_frame(self.frame, 28)
-        self.animar()
+        self.frame = animar(self.frame, 28)
+        self.image = self.animacion[self.direccion][self.frame]
         self.rect.x += self.velx
         self.rect.y += self.vely
-        self.gravedad(0.3)
+        self.gravedad()
         if self.rect.bottom > ALTO:
+            self.estados["saltando"] = False
             self.rect.bottom = ALTO
             self.vely = 0
 
-    def gravedad(self, g=0.5):
+    def gravedad(self):
         if self.vely == 0:
-            self.vely = g
-            self.salto = False
+            self.vely = GRAVEDAD
         else:
-            self.vely += g
+            self.vely += GRAVEDAD
 
     def controles(self, evento):
         if evento.type == pygame.KEYDOWN:
             if evento.key == pygame.K_s:
-                self.speed = True
+                self.estados["corriendo"] = True
             if evento.key == pygame.K_d:
-                if self.speed:
+                self.direccion = 0
+                if self.estados["corriendo"]:
                     self.velx = 8
-                    self.vely = 0
                 else:
                     self.velx = 3
-                    self.vely = 0
             if evento.key == pygame.K_a:
-                if self.speed:
+                self.direccion = 1
+                if self.estados["corriendo"]:
                     self.velx = -8
-                    self.vely = 0
                 else:
                     self.velx = -3
-                    self.vely = 0
-            if (evento.key == pygame.K_SPACE) and (self.salto == False):
-                self.salto = True
-                self.vely = -14
+            if evento.key == pygame.K_SPACE:
+                if not self.estados["saltando"]:
+                    self.estados["saltando"] = True
+                    self.vely = -30
         if evento.type == pygame.KEYUP:
             if (evento.key == pygame.K_a) or (evento.key == pygame.K_d):
                 self.velx = 0
             if evento.key == pygame.K_s:
-                self.speed = False
-
-    def animar(self):
-        if self.velx > 0:
-            self.direccion = 0
-        elif self.velx < 0:
-            self.direccion = 1
-
-        pos_x = self.rect.x
-        pos_y = self.rect.y
-        self.image = self.animacion[self.direccion][self.frame]
-        self.rect = self.image.get_rect()
-        self.rect.x = pos_x
-        self.rect.y = pos_y
+                self.estados["corriendo"] = False
 
     def crear_animacion(self):
         animacion = []

@@ -6,6 +6,8 @@ import pygame
 # SPRITE GROUPS
 jugadores = pygame.sprite.Group()
 enemigos = pygame.sprite.Group()
-
+bloques = pygame.sprite.Group()
 # CICLO DE JUEGO
 en_juego = True
+reloj = pygame.time.Clock()
+niveles = {"inicio": True, "nivel1": True, "nivel2": True, "creditos": True}
