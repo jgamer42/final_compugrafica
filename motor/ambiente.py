@@ -1,12 +1,10 @@
-
-from globales import *
-from constantes import *
 import pygame
 import sys
 import os
 
 sys.path.append(os.getcwd() + "/motor/")
-
+from globales import *
+from constantes import *
 
 
 def ciclo_juego(ventana, elementos_dibujar):
