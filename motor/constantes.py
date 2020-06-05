@@ -1,6 +1,6 @@
 # configuracion de ambiente
-ANCHO = 1250
-ALTO = 690
+ANCHO = 1280
+ALTO = 640
 GRAVEDAD = 10
 # colores
 NEGRO = [0, 0, 0]

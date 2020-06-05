@@ -10,25 +10,23 @@ import pygame
 from motor.constantes import *
 from motor.globales import *
 import motor.ambiente as amb
+import motor.utilidades as util
 from bloque.clases.bloque_base import Bloque_base
 from jugador.clases.jugador import Jugador
 
 jugador = Jugador([400, 500])
-
-bloque = Bloque_base([100, 100])
-
-bloques.add(bloque)
 jugadores.add(jugador)
 
 if __name__ == "__main__":
     pygame.init()
+    util.leer_mapa("mapa/mapa1.json",bloques)
     ventana = pygame.display.set_mode([ANCHO, ALTO])
     while en_juego:
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
                 en_juego = False
             jugador.controles(evento)
-        lista_colision = pygame.sprite.spritecollide(jugador, bloques, False)
+        lista_colision = pygame.sprite.spritecollide(jugador,bloques, False)
         elementos_dibujar = [bloques, jugadores]
         amb.control_colision(lista_colision, jugador)
         amb.ciclo_juego(ventana, elementos_dibujar)

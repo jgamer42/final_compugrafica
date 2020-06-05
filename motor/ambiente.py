@@ -14,15 +14,9 @@ def ciclo_juego(ventana, elementos_dibujar):
         grupo_sprites.draw(ventana)
     pygame.display.flip()
     reloj.tick(30)
-
-
-
 # TODO pulir la colision
-
-
 def control_colision(lista_colision, jugador):
     for colision in lista_colision:
-        print("hola")
         if jugador.vely != 0:
             jugador.vely = 0
 
