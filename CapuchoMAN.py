@@ -14,9 +14,12 @@ from bloque.clases.bloque_base import Bloque_base
 from jugador.clases.jugador import Jugador
 
 jugador = Jugador([400, 500])
-bloque = Bloque_base([400, 450])
-jugadores.add(jugador)
+
+bloque = Bloque_base([100, 100])
+
 bloques.add(bloque)
+jugadores.add(jugador)
+
 if __name__ == "__main__":
     pygame.init()
     ventana = pygame.display.set_mode([ANCHO, ALTO])

@@ -1,7 +1,7 @@
 import pygame
 
 
-def crear_sprite(sabana, dimensiones, cuadros, filas=1, opcion=None):
+def crear_sprite(dir_sabana, dimensiones, cuadros, filas=1, opcion=None):
     """
     Funcion para recorte de sprites
     sabana: imagen con los graficos
@@ -10,14 +10,18 @@ def crear_sprite(sabana, dimensiones, cuadros, filas=1, opcion=None):
     filas: filas de lasabana (default 1)
     opcion: optiene una matriz con el parametro "matriz" (default None)
     """
+
+    sabana = pygame.image.load(dir_sabana)
+
     ancho_cuadros = dimensiones[0]
     alto_cuadros = dimensiones[1]
     animacion = []
     # Recorta como fila
     if filas == 1:
         for cuadro in range(cuadros):
-            cuadro = sabana.subsurface(ancho_cuadros * cuadro, 0,
-                                       ancho_cuadros, alto_cuadros)
+            cuadro = sabana.subsurface(
+                ancho_cuadros * cuadro, 0, ancho_cuadros, alto_cuadros
+            )
             animacion.append(cuadro)
     # recorta como matricez
     elif filas > 1 and opcion == "matriz":

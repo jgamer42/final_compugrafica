@@ -2,6 +2,7 @@ import ambiente
 import globales
 from constantes import *
 from utilidades import *
+
 import math
 import os
 import sys
@@ -42,6 +43,7 @@ class Jugador(pygame.sprite.Sprite):
             self.rect.bottom = ALTO
             self.vely = 0
 
+
         if self.rect.x <= 0 or self.rect.right >= ANCHO:
             self.velx = 0
             globales.velx_entorno = 10 * self.direccion
@@ -78,8 +80,10 @@ class Jugador(pygame.sprite.Sprite):
 
     def crear_animacion(self):
         animacion = []
-        sabana_derecha = pygame.image.load("./jugador/sprites/derecha.png")
-        sabana_izquierda = pygame.image.load("./jugador/sprites/izquierda.png")
-        animacion.append(crear_sprite(sabana_derecha, [128, 184], 6, 5))
-        animacion.append(crear_sprite(sabana_izquierda, [128, 184], 6, 5))
+        animacion.append(
+            crear_sprite("./jugador/sprites/derecha.png", [128, 184], 6, 5)
+        )
+        animacion.append(
+            crear_sprite("./jugador/sprites/izquierda.png", [128, 184], 6, 5)
+        )
         return animacion

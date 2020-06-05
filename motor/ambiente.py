@@ -1,3 +1,4 @@
+
 from globales import *
 from constantes import *
 import pygame
@@ -7,6 +8,7 @@ import os
 sys.path.append(os.getcwd() + "/motor/")
 
 
+
 def ciclo_juego(ventana, elementos_dibujar):
     ventana.fill(ROJO)
     for grupo_sprites in elementos_dibujar:
@@ -14,6 +16,7 @@ def ciclo_juego(ventana, elementos_dibujar):
         grupo_sprites.draw(ventana)
     pygame.display.flip()
     reloj.tick(30)
+
 
 
 # TODO pulir la colision
