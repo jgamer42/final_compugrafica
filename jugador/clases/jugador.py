@@ -1,7 +1,3 @@
-import ambiente
-import globales
-from constantes import *
-from utilidades import *
 
 import math
 import os
@@ -9,7 +5,10 @@ import sys
 import pygame
 
 sys.path.append(os.getcwd() + "/motor/")
-
+import ambiente
+import globales
+from constantes import *
+from utilidades import *
 
 class Jugador(pygame.sprite.Sprite):
     def __init__(self, pos):

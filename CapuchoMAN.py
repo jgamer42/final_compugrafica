@@ -13,10 +13,14 @@ import motor.ambiente as amb
 import motor.utilidades as util
 from bloque.clases.bloque_base import Bloque_base
 from jugador.clases.jugador import Jugador
+from enemigos.clases.enemigo_base import Enemigo_base
+from enemigos.clases.observador import Observador
 
 jugador = Jugador([400, 500])
 jugadores.add(jugador)
-
+enemigo = Enemigo_base([500,500])
+enemigos.add(enemigo)
+alarma = Observador(enemigo)
 if __name__ == "__main__":
     pygame.init()
     util.leer_mapa("mapa/mapa1.json",bloques)
@@ -27,6 +31,7 @@ if __name__ == "__main__":
                 en_juego = False
             jugador.controles(evento)
         lista_colision = pygame.sprite.spritecollide(jugador,bloques, False)
-        elementos_dibujar = [bloques, jugadores]
+        elementos_dibujar = [bloques,enemigos,jugadores]
+
         amb.control_colision(lista_colision, jugador)
         amb.ciclo_juego(ventana, elementos_dibujar)
