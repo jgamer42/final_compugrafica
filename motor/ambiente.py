@@ -27,14 +27,6 @@ def control_colision(lista_colision, jugador):
             jugador.vely = 0
             jugador.estados["saltando"] = False
             jugador.rect.bottom = colision.rect.top
-
-        #limites derechos e izquierdos
-        if jugador.rect.x <= 150 or jugador.rect.right >= (ANCHO - 150):
-            jugador.velx = 0
-            globales.velx_entorno = -10 * jugador.direccion
-        else:
-            globales.velx_entorno = 0
-
         '''
         if jugador.direccion == 1:
             if jugador.rect.right > colision.rect.left:
