@@ -18,7 +18,7 @@ class Jugador(pygame.sprite.Sprite):
         self.puntos = 0
         self.animacion = self.crear_animacion()
         self.frame = 0
-        self.direccion = 1
+        self.direccion = 0
         self.aux_animacion = 0
         self.image = self.animacion[self.aux_animacion][self.frame]
         self.rect = self.image.get_rect()
@@ -29,25 +29,11 @@ class Jugador(pygame.sprite.Sprite):
         self.estados = {"saltando": False, "corriendo": False}
 
     def update(self):
-        self.frame = animar(self.frame, 28)
+        self.frame = animar(self.frame, 28, self.direccion)
         self.image = self.animacion[self.aux_animacion][self.frame]
         self.rect.x += self.velx
         self.rect.y += self.vely
         ambiente.gravedad(self)
-        self.comportamiento_limites()
-
-    def comportamiento_limites(self):
-        if self.rect.bottom > ALTO:
-            self.estados["saltando"] = False
-            self.rect.bottom = ALTO
-            self.vely = 0
-
-
-        if self.rect.x <= 0 or self.rect.right >= ANCHO:
-            self.velx = 0
-            globales.velx_entorno = 10 * self.direccion
-        else:
-            globales.velx_entorno = 0
 
     def controles(self, evento):
         if evento.type == pygame.KEYDOWN:
@@ -57,32 +43,35 @@ class Jugador(pygame.sprite.Sprite):
                 self.direccion = 1
                 self.aux_animacion = 0
                 if self.estados["corriendo"]:
-                    self.velx = 8
+                    self.velx = 16
                 else:
-                    self.velx = 3
+                    self.velx = 11
             if evento.key == pygame.K_a:
                 self.direccion = -1
                 self.aux_animacion = 1
                 if self.estados["corriendo"]:
-                    self.velx = -8
+                    self.velx = -16
                 else:
-                    self.velx = -3
+                    self.velx = -11
             if evento.key == pygame.K_SPACE:
                 if not self.estados["saltando"]:
                     self.estados["saltando"] = True
                     self.vely = -50
+                else:
+                    self.estados["saltando"] = False
         if evento.type == pygame.KEYUP:
             if (evento.key == pygame.K_a) or (evento.key == pygame.K_d):
                 self.velx = 0
+                self.direccion = 0
             if evento.key == pygame.K_s:
                 self.estados["corriendo"] = False
 
     def crear_animacion(self):
         animacion = []
         animacion.append(
-            crear_sprite("./jugador/sprites/derecha.png", [128, 184], 6, 5)
+            crear_sprite("./jugador/sprites/derecha.png", [64,92], 6, 5)
         )
         animacion.append(
-            crear_sprite("./jugador/sprites/izquierda.png", [128, 184], 6, 5)
+            crear_sprite("./jugador/sprites/izquierda.png", [64,92], 6, 5)
         )
         return animacion

@@ -15,7 +15,7 @@ def crear_sprite(dir_sabana, dimensiones, columnas, filas=1, opcion=None):
     sabana: imagen con los graficos
     dimensiones: lista con ancho y alto [ancho,alto] del recorte
     columnas: cantidad de columnas que tiene la sabana
-    filas: filas de lasabana (default 1)
+    filas: filas de la sabana (default 1)
     opcion: optiene una matriz con el parametro "matriz" (default None)
     """
     sabana = pygame.image.load(dir_sabana)
@@ -32,24 +32,32 @@ def crear_sprite(dir_sabana, dimensiones, columnas, filas=1, opcion=None):
         for f in range(filas):
             fila = []
             for cuadro in range(columnas):
-                cuadro = sabana.subsurface(ancho_cuadros * cuadro,alto_cuadros * f,ancho_cuadros,alto_cuadros,)
+                cuadro = sabana.subsurface(ancho_cuadros * cuadro,alto_cuadros * f,ancho_cuadros,alto_cuadros)
                 fila.append(cuadro)
             animacion.append(fila)
     # recorta una sabana matriz como una fila
     elif filas > 1 and opcion == None:
         for fila in range(filas):
             for cuadro in range(columnas):
-                cuadro = sabana.subsurface(ancho_cuadros * cuadro,alto_cuadros * fila,ancho_cuadros,alto_cuadros,)
+                cuadro = sabana.subsurface(ancho_cuadros * cuadro,alto_cuadros * fila,ancho_cuadros,alto_cuadros)
                 animacion.append(cuadro)
     return animacion
 
-
-def animar(frame_actual, numero_frames):
-    if frame_actual < (numero_frames - 1):
-        frame_actual += 1
-    else:
-        frame_actual = 0
-    return frame_actual
+def animar(frame_actual, numero_frames,direccion):
+    if direccion == 0:
+        return frame_actual
+    elif direccion == 1:
+        if frame_actual < (numero_frames - 1):
+            frame_actual += 1
+        else:
+            frame_actual = 0
+        return frame_actual
+    elif direccion == -1:
+        if frame_actual > 0:
+            frame_actual -= 1
+        else:
+            frame_actual = (numero_frames - 1)
+        return frame_actual
 
 def leer_mapa(dir_mapa,receptor):
     matriz_mapa = None
