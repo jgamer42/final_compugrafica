@@ -5,34 +5,37 @@
 # - a la hora de crear nuevas clase nombrar el archivo en minisculas y la clase con la primera en mayuscula
 # - mantener coherencia entre plural y singular
 # - tratar de no subir word, psd, fsd, o cualquier extension o archivo compilado
-import pygame
-
-from motor.constantes import *
-from motor.globales import *
 import motor.ambiente as amb
+import motor.globales as glob
 import motor.utilidades as util
+import pygame
 from bloque.clases.bloque_base import Bloque_base
-from jugador.clases.jugador import Jugador
 from enemigos.clases.enemigo_base import Enemigo_base
 from enemigos.clases.observador import Observador
+from jugador.clases.jugador import Jugador
+from motor.constantes import *
+from varname import varname
 
 jugador = Jugador([151,0])
-jugadores.add(jugador)
+glob.jugadores.add(jugador)
 enemigo = Enemigo_base([500,500])
-enemigos.add(enemigo)
+glob.enemigos.add(enemigo)
 alarma = Observador(enemigo)
 
 if __name__ == "__main__":
     pygame.init()
-    util.leer_mapa("mapa/mapaA1.json",bloques)
+    util.leer_mapa("mapa/mapaA1.json",glob.bloques)
     ventana = pygame.display.set_mode([ANCHO,ALTO])
 
-    while en_juego:
+    while glob.en_juego:
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
-                en_juego = False
+                glob.en_juego = False
             jugador.controles(evento)
-        lista_colision = pygame.sprite.spritecollide(jugador,bloques, False)
-        elementos_dibujar = [bloques,enemigos,jugadores]
-        amb.control_colision(lista_colision, jugador)
-        amb.ciclo_juego(ventana, elementos_dibujar)
+        lista_colision = pygame.sprite.spritecollide(jugador,glob.bloques,False)
+        elementos_dibujar = [glob.bloques,glob.enemigos]
+        ventana.fill(NEGRO)
+        ventana.blit(glob.fondos_mapas["mapaA1"],amb.velocidad_fondo())
+        jugador.update(lista_colision)
+        glob.jugadores.draw(ventana)
+        amb.ciclo_juego(ventana,elementos_dibujar)

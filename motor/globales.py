@@ -11,6 +11,7 @@ bloques = pygame.sprite.Group()
 en_juego = True
 reloj = pygame.time.Clock()
 niveles = {"inicio": True, "nivel1": True, "nivel2": True, "creditos": True}
+game_over = False
 
 # configuracion ambiente
 velx_entorno = 0
