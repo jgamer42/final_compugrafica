@@ -3,4 +3,5 @@ class Observador:
         self.observado = sujeto.agregar_observador(self)
     
     def informar(self):
-        print("notificado")
+        #print("notificado")
+        pass

@@ -28,17 +28,34 @@ class Jugador(pygame.sprite.Sprite):
         self.rect.y = pos[1]
         self.velx = 0
         self.vely = 0
-        self.estados = {"saltando": False, "corriendo": False}
+        self.estados = {"saltando": False, "corriendo": False,"cayendo":True}
+        self.lista_colision = []
 
-    def update(self,lista_colision):
+    def update(self):
         self.frame = animar(self.frame, 28, self.direccion)
         self.image = self.animacion[self.aux_animacion][self.frame]
         self.rect.x += self.velx
-        #self.colision_x(lista_colision)
         self.rect.y += self.vely
-        self.colision_y(lista_colision)
+        self.colision_y()
         self.comportamiento_limites()
-        ambiente.gravedad(self)
+        if self.estados["cayendo"]:
+            ambiente.gravedad(self)
+    
+    def colision_y(self):
+        for objeto in self.lista_colision:
+            print("cayendo ",self.rect.bottom -132,",",objeto.rect.top)
+            if self.estados["saltando"]:
+                print("subiendo")
+                self.rect.top = objeto.rect.bottom
+                self.vely = 0
+                self.estados["saltando"] = False
+                #self.estados["cayendo"] = True
+            else:
+                if self.estados["cayendo"]:
+                    print("entro")
+                    self.rect.bottom = objeto.rect.top
+                    self.vely = 0
+                    self.estados["cayendo"]= False
 
     '''
     def colision_x(self,lista_colision):
@@ -53,18 +70,6 @@ class Jugador(pygame.sprite.Sprite):
                     self.velx = 0
     '''
 
-    def colision_y(self,lista_colision):
-        for colision in lista_colision:
-            if self.estados["saltando"]:
-                print("subiendo")
-                self.rect.top = colision.rect.bottom
-                self.vely = 0
-                self.estados["saltando"] = False
-            else:
-                print("cayendo")
-                self.rect.bottom = colision.rect.top
-                self.vely = 0
-                self.estados["saltando"] = False
 
     def comportamiento_limites(self):
         #limites derechos e izquierdos
@@ -99,6 +104,7 @@ class Jugador(pygame.sprite.Sprite):
             if evento.key == pygame.K_SPACE:
                 if not self.estados["saltando"]:
                     self.estados["saltando"] = True
+                    self.estados["cayendo"] = True
                     self.vely = -50
                 else:
                     self.estados["saltando"] = False

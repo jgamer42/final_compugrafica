@@ -1,13 +1,13 @@
 import os
 import sys
-
+sys.path.append(os.getcwd() + "/motor/")
 import globales
 import pygame
 from constantes import *
 
-sys.path.append(os.getcwd() + "/motor/")
-
 def ciclo_juego(ventana, elementos_dibujar):
+    ventana.fill(NEGRO)
+    ventana.blit(globales.fondos_mapas["mapaA1"],velocidad_fondo())
     for grupo_sprites in elementos_dibujar:
         grupo_sprites.update()
         grupo_sprites.draw(ventana)
@@ -24,3 +24,6 @@ def gravedad(objeto):
         objeto.vely = GRAVEDAD
     else:
         objeto.vely += GRAVEDAD
+
+def control_colision(jugador,lista_colision):
+    pass

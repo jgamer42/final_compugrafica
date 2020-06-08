@@ -94,7 +94,7 @@ def cargar_mapa(matriz_mapa,dimensiones_mapa,ancho_recorte,alto_recorte,sprites,
     con = 0
     for i in range(dimensiones_mapa[0]):
         for j in range(dimensiones_mapa[1]):
-            print(matriz_mapa[con],end="")
+            #print(matriz_mapa[con],end="")
             if matriz_mapa[con] != 0:
                 # obtiene el sprite de la lista de sprites
                 sprite_cuadro = sprites[matriz_mapa[con] - 1]
@@ -104,7 +104,7 @@ def cargar_mapa(matriz_mapa,dimensiones_mapa,ancho_recorte,alto_recorte,sprites,
                 bloque = Bloque_base(pos, sprite_cuadro)
                 receptor.add(bloque)
             con += 1
-        print("\n")
-    print(glob.bloques)
+        #print("\n")
+    #print(glob.bloques)
 
 #leer_mapa("./mapa/nivel1.json")
