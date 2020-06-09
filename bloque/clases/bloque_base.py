@@ -1,10 +1,12 @@
-import pygame
-import sys
 import os
-sys.path.append(os.getcwd() + "/motor/")
-from constantes import *
-import globales
+import sys
+
 import ambiente
+import globales
+import pygame
+from constantes import *
+
+sys.path.append(os.getcwd() + "/motor/")
 
 class Bloque_base(pygame.sprite.Sprite):
     def __init__(self, pos, img=None):
@@ -15,7 +17,6 @@ class Bloque_base(pygame.sprite.Sprite):
         else:
             self.image = img
         self.rect = self.image.get_rect()
-        print("bloque ", "(",self.rect.width,",",self.rect.height,")")
         self.rect.x = pos[0]
         self.rect.y = pos[1]
         self.velx = 0

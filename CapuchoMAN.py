@@ -5,15 +5,15 @@
 # - a la hora de crear nuevas clase nombrar el archivo en minisculas y la clase con la primera en mayuscula
 # - mantener coherencia entre plural y singular
 # - tratar de no subir word, psd, fsd, o cualquier extension o archivo compilado
+import motor.ambiente as amb
+import motor.globales as globales
+import motor.utilidades as util
 import pygame
 from bloque.clases.bloque_base import Bloque_base
 from enemigos.clases.enemigo_base import Enemigo_base
 from enemigos.clases.observador import Observador
 from jugador.clases.jugador import Jugador
 from motor.constantes import *
-import motor.ambiente as amb
-import motor.globales as globales
-import motor.utilidades as util
 
 jugador = Jugador([64,0])
 globales.jugadores.add(jugador)
@@ -33,6 +33,8 @@ if __name__ == "__main__":
             jugador.controles(evento)
         lista_colision = pygame.sprite.spritecollide(jugador,globales.bloques,False)
         jugador.lista_colision = lista_colision
+        #print(len(globales.bloques))
+        jugador.lista_bloques = globales.bloques
         elementos_dibujar = [globales.bloques,globales.enemigos,globales.jugadores]
         amb.control_colision(jugador,lista_colision)
         amb.ciclo_juego(ventana,elementos_dibujar)

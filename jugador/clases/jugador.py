@@ -30,8 +30,10 @@ class Jugador(pygame.sprite.Sprite):
         self.vely = 0
         self.estados = {"saltando": False, "corriendo": False,"cayendo":True}
         self.lista_colision = []
+        self.lista_bloques = None
 
     def update(self):
+        #NOTE no cambiar el orden , si se cambia el orden se jode todo
         self.frame = animar(self.frame, 28, self.direccion)
         self.image = self.animacion[self.aux_animacion][self.frame]
         self.rect.x += self.velx
@@ -43,19 +45,24 @@ class Jugador(pygame.sprite.Sprite):
             ambiente.gravedad(self)
 
     def colision_y(self):
-        for objeto in self.lista_colision:
-            if self.vely < 0:
-                if self.rect.bottom > objeto.rect.top and self.rect.top < objeto.rect.top:
-                    print("subiendo")
+        if self.lista_colision:
+            for objeto in self.lista_colision:
+                if self.vely < 0:
                     self.rect.top = objeto.rect.bottom
                     self.vely = 0
                     self.estados["saltando"] = False
-            elif self.vely > 0:
-                    if self.rect.top < objeto.rect.bottom and self.rect.bottom > objeto.rect.bottom:
-                        print("entro")
+                elif self.vely > 0:
+                        print("cosa")
+                        #if self.rect.top < objeto.rect.bottom and self.rect.bottom > objeto.rect.bottom:
+                        self.estados["cayendo"]= False
                         self.rect.bottom = objeto.rect.top
                         self.vely = 0
-                        self.estados["cayendo"]= False
+        else:
+            for bloque in self.lista_bloques:
+                if self.rect.bottom+1 > bloque.rect.top:
+                    self.estados["cayendo"] = False
+                else:
+                    self.estados["cayendo"] = True
 
     def colision_x(self):
         for objeto in self.lista_colision:
@@ -71,13 +78,12 @@ class Jugador(pygame.sprite.Sprite):
                     self.velx = 0
 
     def comportamiento_limites(self):
-        #limites derechos e izquierdos
         if self.rect.x <= 0 or self.rect.right >= ANCHO:
             self.velx = 0
             globales.velx_entorno = -10 * self.direccion
-            if self.direccion == -1:
+            if self.rect.x < 0 :
                 self.rect.x = 0
-            else:
+            elif self.rect.right > ANCHO:
                 self.rect.right = ANCHO
         else:
             globales.velx_entorno = 0
