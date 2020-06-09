@@ -35,41 +35,40 @@ class Jugador(pygame.sprite.Sprite):
         self.frame = animar(self.frame, 28, self.direccion)
         self.image = self.animacion[self.aux_animacion][self.frame]
         self.rect.x += self.velx
+        self.colision_x()
         self.rect.y += self.vely
         self.colision_y()
         self.comportamiento_limites()
         if self.estados["cayendo"]:
             ambiente.gravedad(self)
-    
+
     def colision_y(self):
         for objeto in self.lista_colision:
-            print("cayendo ",self.rect.bottom -132,",",objeto.rect.top)
-            if self.estados["saltando"]:
-                print("subiendo")
-                self.rect.top = objeto.rect.bottom
-                self.vely = 0
-                self.estados["saltando"] = False
-                #self.estados["cayendo"] = True
-            else:
-                if self.estados["cayendo"]:
-                    print("entro")
-                    self.rect.bottom = objeto.rect.top
+            if self.vely < 0:
+                if self.rect.bottom > objeto.rect.top and self.rect.top < objeto.rect.top:
+                    print("subiendo")
+                    self.rect.top = objeto.rect.bottom
                     self.vely = 0
-                    self.estados["cayendo"]= False
+                    self.estados["saltando"] = False
+            elif self.vely > 0:
+                    if self.rect.top < objeto.rect.bottom and self.rect.bottom > objeto.rect.bottom:
+                        print("entro")
+                        self.rect.bottom = objeto.rect.top
+                        self.vely = 0
+                        self.estados["cayendo"]= False
 
-    '''
-    def colision_x(self,lista_colision):
-        for colision in lista_colision:
-            if self.velx > 0:
-                if self.rect.right > colision.rect.left:
-                    self.rect.right = colision.rect.left
+    def colision_x(self):
+        for objeto in self.lista_colision:
+            if self.velx == 0:
+                pass
+            elif self.velx > 0:
+                if self.rect.right > objeto.rect.left and self.rect.left < objeto.rect.left:
+                    self.rect.right = objeto.rect.left
                     self.velx = 0
-            else:
-                if self.rect.left < colision.rect.right:
-                    self.rect.left = colision.rect.right
+            elif self.velx < 0:
+                if self.rect.left < objeto.rect.right and self.rect.right > objeto.rect.right:
+                    self.rect.left = objeto.rect.right
                     self.velx = 0
-    '''
-
 
     def comportamiento_limites(self):
         #limites derechos e izquierdos
@@ -117,6 +116,6 @@ class Jugador(pygame.sprite.Sprite):
 
     def crear_animacion(self):
         animacion = []
-        animacion.append(crear_sprite("./jugador/sprites/derecha.png", [64,92], 6, 5))
-        animacion.append(crear_sprite("./jugador/sprites/izquierda.png", [64,92], 6, 5))
+        animacion.append(crear_sprite("./jugador/sprites/derecha.png", [41,60], 6, 5))
+        animacion.append(crear_sprite("./jugador/sprites/izquierda.png", [41,60], 6, 5))
         return animacion
