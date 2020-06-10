@@ -31,20 +31,19 @@ creditos = Icono([917,482],IconoCreditos)
 iconos.add(creditos)
 salir = Icono([917,575],IconoSalir)
 iconos.add(salir)
+#print(glob.cosa)
 
-
-def menu_inicio(ventana,evento):
+def menu_inicio(ventana,evento,control):
+    print(control)
     mouse = pg.mouse.get_pos()
     click = pg.mouse.get_pressed()
-
     ventana.fill(NEGRO)
     ventana.blit(fondo,[0,0])
-
     if jugar.rect.collidepoint(mouse):
         if click[0] == 1:
             ventana.blit(IconoJugar,[917,297])
-            glob.niveles["inicio"] = False
-            glob.niveles["nivel1"] = True
+            control["inicio"]= False
+            control["nivel1"]=True
         else:
             ventana.blit(IconoJugar,[917,297])
     elif opciones.rect.collidepoint(mouse):
@@ -70,7 +69,4 @@ def menu_inicio(ventana,evento):
             glob.en_juego = False
         else:
             ventana.blit(IconoSalir,[917,575])
-
-    print("click: ",click[0],"   pos_mouse",mouse)
-
     pg.display.flip()

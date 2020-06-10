@@ -31,13 +31,13 @@ if __name__ == "__main__":
     pygame.display.set_caption("CapuchoMAN")
 
     while globales.en_juego:
-        while globales.niveles["inicio"]:
+        while globales.niveles["inicio"] and globales.en_juego:
             for evento in pygame.event.get():
                 if evento.type == pygame.QUIT:
                     globales.en_juego = False
-                menu.menu_inicio(ventana,evento)
+                menu.menu_inicio(ventana,evento,globales.niveles)
 
-        while  globales.niveles["nivel1"]:
+        while  globales.niveles["nivel1"] and globales.en_juego:
             for evento in pygame.event.get():
                 if evento.type == pygame.QUIT:
                     globales.en_juego = False
@@ -47,5 +47,3 @@ if __name__ == "__main__":
             jugador.lista_bloques = globales.bloques
             elementos_dibujar = [globales.bloques,globales.enemigos,globales.jugadores]
             amb.ciclo_juego(ventana,elementos_dibujar)
-
-    pygame.quit()

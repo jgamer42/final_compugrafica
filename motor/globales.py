@@ -21,3 +21,4 @@ y_fondo = 0
 
 #fondos niveles
 fondos_mapas = {"mapaA1":pygame.image.load("mapa/mapaA1.png")}
+cosa="hola"
