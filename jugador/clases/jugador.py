@@ -23,6 +23,7 @@ class Jugador(pygame.sprite.Sprite):
         self.direccion = 0
         self.aux_animacion = 0
         self.image = self.animacion[self.aux_animacion][self.frame]
+        self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.x = pos[0]
         self.rect.y = pos[1]
@@ -36,6 +37,7 @@ class Jugador(pygame.sprite.Sprite):
         #NOTE no cambiar el orden , si se cambia el orden se jode todo
         self.frame = animar(self.frame, 28, self.direccion)
         self.image = self.animacion[self.aux_animacion][self.frame]
+        self.mask = pygame.mask.from_surface(self.image)
         self.rect.x += self.velx
         self.colision_x()
         self.rect.y += self.vely
@@ -88,37 +90,40 @@ class Jugador(pygame.sprite.Sprite):
         else:
             globales.velx_entorno = 0
 
-    def controles(self, evento):
-        if evento.type == pygame.KEYDOWN:
-            if evento.key == pygame.K_LSHIFT:
-                self.estados["corriendo"] = True
-            if evento.key == pygame.K_d:
-                self.direccion = 1
-                self.aux_animacion = 0
-                if self.estados["corriendo"]:
-                    self.velx = 16
-                else:
-                    self.velx = 11
-            if evento.key == pygame.K_a:
-                self.direccion = -1
-                self.aux_animacion = 1
-                if self.estados["corriendo"]:
-                    self.velx = -16
-                else:
-                    self.velx = -11
-            if evento.key == pygame.K_SPACE:
-                if not self.estados["saltando"]:
-                    self.estados["saltando"] = True
-                    self.estados["cayendo"] = True
-                    self.vely = -50
-                else:
-                    self.estados["saltando"] = False
-        if evento.type == pygame.KEYUP:
-            if (evento.key == pygame.K_a) or (evento.key == pygame.K_d):
+    def controles(self):
+        keys = pygame.key.get_pressed()
+
+        if not keys[pygame.K_a] or not keys[pygame.K_d]:
                 self.velx = 0
                 self.direccion = 0
-            if evento.key == pygame.K_LSHIFT:
-                self.estados["corriendo"] = False
+
+        if keys[pygame.K_a]:
+            if keys[pygame.K_LSHIFT]:
+                    self.direccion = -1
+                    self.aux_animacion = 1
+                    self.velx = -13
+            else:
+                self.direccion = -1
+                self.aux_animacion = 1
+                self.velx = -8
+
+        if keys[pygame.K_d]:
+            if keys[pygame.K_LSHIFT]:
+                    self.direccion = 1
+                    self.aux_animacion = 0
+                    self.velx = 13
+            else:
+                self.direccion = 1
+                self.aux_animacion = 0
+                self.velx = 8
+
+        if keys[pygame.K_SPACE]:
+            if not self.estados["saltando"]:
+                self.estados["saltando"] = True
+                self.estados["cayendo"] = True
+                self.vely = -50
+            else:
+                self.estados["saltando"] = False
 
     def crear_animacion(self):
         animacion = []

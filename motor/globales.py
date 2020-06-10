@@ -10,7 +10,7 @@ bloques = pygame.sprite.Group()
 # CICLO DE JUEGO
 en_juego = True
 reloj = pygame.time.Clock()
-niveles = {"inicio": True, "nivel1": True, "nivel2": True, "creditos": True}
+niveles = {"inicio": True, "nivel1": False, "nivel2": False, "creditos": False, "opciones": False}
 game_over = False
 
 # configuracion ambiente
