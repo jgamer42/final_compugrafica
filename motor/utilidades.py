@@ -2,14 +2,12 @@ import json
 import os
 import sys
 from xml.dom import minidom
-
-import globales as glob
+sys.path.append(os.getcwd() + "/bloque/clases/")
+sys.path.append(os.getcwd() + "/motor/")
 import pygame
 from bloque_base import Bloque_base
 from constantes import *
 
-sys.path.append(os.getcwd() + "/bloque/clases/")
-sys.path.append(os.getcwd() + "/motor/")
 
 def crear_sprite(dir_sabana, dimensiones, columnas, filas=1, opcion=None):
     """
@@ -96,7 +94,6 @@ def cargar_mapa(matriz_mapa,dimensiones_mapa,ancho_recorte,alto_recorte,sprites,
     con = 0
     for i in range(dimensiones_mapa[0]):
         for j in range(dimensiones_mapa[1]):
-            #print(matriz_mapa[con],end="")
             if matriz_mapa[con] != 0:
                 # obtiene el sprite de la lista de sprites
                 sprite_cuadro = sprites[matriz_mapa[con] - 1]
@@ -105,7 +102,6 @@ def cargar_mapa(matriz_mapa,dimensiones_mapa,ancho_recorte,alto_recorte,sprites,
                 pos = [pos_x, pos_y]
                 bloque = Bloque_base(pos, sprite_cuadro)
                 receptor.add(bloque)
-                #modificador = Bloque_base()
             con += 1
 
 

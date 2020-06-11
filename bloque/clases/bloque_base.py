@@ -1,13 +1,10 @@
 import os
 import sys
-
+sys.path.append(os.getcwd() + "/motor/")
 import ambiente
 import globales
 import pygame
 from constantes import *
-
-sys.path.append(os.getcwd() + "/motor/")
-
 class Bloque_base(pygame.sprite.Sprite):
     def __init__(self, pos, img=None):
         super().__init__()

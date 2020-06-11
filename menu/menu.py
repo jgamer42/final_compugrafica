@@ -1,17 +1,9 @@
 import os
 import sys
-
+sys.path.append(os.getcwd() + "/motor/")
 import globales as glob
 import pygame as pg
 from motor.constantes import *
-
-sys.path.append(os.getcwd() + "/motor/")
-
-fondo = pg.image.load("./menu/Inicio.png")
-IconoJugar = pg.image.load("./menu/IconoJugar.png")
-IconoOpciones = pg.image.load("./menu/IconoOpciones.png")
-IconoCreditos = pg.image.load("./menu/IconoCreditos.png")
-IconoSalir = pg.image.load("./menu/IconoSalir.png")
 
 
 class Icono(pg.sprite.Sprite):
@@ -23,23 +15,29 @@ class Icono(pg.sprite.Sprite):
         self.rect.y = pos[1]
         self.click = False
 
-
+fondo = pg.image.load("./menu/Inicio.png")
 iconos = pg.sprite.Group()
+
+IconoJugar = pg.image.load("./menu/IconoJugar.png")
 jugar = Icono([917,297],IconoJugar)
 iconos.add(jugar)
+
+IconoOpciones = pg.image.load("./menu/IconoOpciones.png")
 opciones = Icono([917,389],IconoOpciones)
 iconos.add(opciones)
+
+IconoCreditos = pg.image.load("./menu/IconoCreditos.png")
 creditos = Icono([917,482],IconoCreditos)
 iconos.add(creditos)
+
+IconoSalir = pg.image.load("./menu/IconoSalir.png")
 salir = Icono([917,575],IconoSalir)
 iconos.add(salir)
-#print(glob.cosa)
+
 def menu_inicio(ventana,niveles, mouse,click):
     ventana.fill(NEGRO)
     ventana.blit(fondo,[0,0])
-
     if jugar.rect.collidepoint(mouse):
-        print("colisionando en jugar")
         if click[0] == 1:
             ventana.blit(IconoJugar,[917,297])
             niveles["inicio"] = False
@@ -48,7 +46,6 @@ def menu_inicio(ventana,niveles, mouse,click):
             ventana.blit(IconoJugar,[917,297])
     elif opciones.rect.collidepoint(mouse):
         if click[0] == 1:
-            print("opciones")
             ventana.blit(IconoOpciones,[917,389])
             niveles["inicio"] = False
             niveles["opciones"] = True
@@ -56,7 +53,6 @@ def menu_inicio(ventana,niveles, mouse,click):
             ventana.blit(IconoOpciones,[917,389])
     elif creditos.rect.collidepoint(mouse):
         if click[0] == 1:
-            print("creditos")
             ventana.blit(IconoCreditos,[917,482])
             niveles["inicio"] = False
             niveles["creditos"] = True
@@ -64,7 +60,6 @@ def menu_inicio(ventana,niveles, mouse,click):
             ventana.blit(IconoCreditos,[917,482])
     elif salir.rect.collidepoint(mouse):
         if click[0] == 1:
-            print("salir")
             ventana.blit(IconoSalir,[917,575])
             niveles["inicio"] = False
             return False

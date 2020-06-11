@@ -5,14 +5,16 @@ import globales
 import pygame
 from constantes import *
 
+fondos_mapas = {"mapaA1":pygame.image.load("mapa/mapaA1.png")}
+
 def ciclo_juego(ventana, elementos_dibujar):
+    global fondos_mapas
     ventana.fill(NEGRO)
-    ventana.blit(globales.fondos_mapas["mapaA1"],velocidad_fondo())
+    ventana.blit(fondos_mapas["mapaA1"],velocidad_fondo())
     for grupo_sprites in elementos_dibujar:
         grupo_sprites.update()
         grupo_sprites.draw(ventana)
     pygame.display.flip()
-    globales.reloj.tick(30)
 
 def velocidad_fondo():
     globales.x_fondo += globales.velx_entorno
@@ -25,5 +27,3 @@ def gravedad(objeto):
     else:
         objeto.vely += GRAVEDAD
 
-def control_colision(jugador,lista_colision):
-    pass

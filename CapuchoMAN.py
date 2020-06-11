@@ -17,36 +17,44 @@ from enemigos.clases.enemigo_base import Enemigo_base
 from jugador.clases.jugador import Jugador
 from motor.constantes import *
 
-jugador = Jugador([128 + 1,ALTO-128 - 1])
-globales.jugadores.add(jugador)
-enemigo = Enemigo_base([500,500])
-globales.enemigos.add(enemigo)
-#alarma = Observador(enemigo)
+jugadores = pg.sprite.Group()
+enemigos = pg.sprite.Group()
+bloques = pg.sprite.Group()
 
+
+
+jugador = Jugador([128 + 1,ALTO-128 - 1])
+jugadores.add(jugador)
+enemigo = Enemigo_base([500,500])
+enemigos.add(enemigo)
+
+#alarma = Observador(enemigo)
+reloj = pg.time.Clock()
+en_juego = True
+niveles = {"inicio": True, "nivel1": False, "nivel2": False, "creditos": False, "opciones": False}
+game_over = False
 if __name__ == "__main__":
     pg.init()
-    util.leer_mapa("mapa/mapaA1.json",globales.bloques)
+    util.leer_mapa("mapa/mapaA1.json",bloques)
     ventana = pg.display.set_mode([ANCHO,ALTO])
     icono_juego = pg.image.load('CapuchoMAN.png')
     pg.display.set_icon(icono_juego)
     pg.display.set_caption("CapuchoMAN")
 
-    while globales.en_juego:
-        while globales.niveles["inicio"] and globales.en_juego:
+    while en_juego:
+        while niveles["inicio"] and en_juego:
             for evento in pg.event.get():
                 if evento.type == pg.QUIT:
-                    globales.en_juego = False
-                globales.en_juego = menu.menu_inicio(ventana,globales.niveles,pg.mouse.get_pos(),pg.mouse.get_pressed())
+                    en_juego = False
+                en_juego = menu.menu_inicio(ventana,niveles,pg.mouse.get_pos(),pg.mouse.get_pressed())
 
-        while  globales.niveles["nivel1"] and globales.en_juego:
+        while  niveles["nivel1"] and en_juego:
             for evento in pg.event.get():
                 if evento.type == pg.QUIT:
-
-                    globales.en_juego = False
+                    en_juego = False
                 jugador.controles(pg.key.get_pressed())
-            lista_colision = pg.sprite.spritecollide(jugador,globales.bloques,False)
-            jugador.lista_bloques = globales.bloques
-            elementos_dibujar = [globales.jugadores,globales.bloques,globales.enemigos]
+            jugador.lista_bloques = bloques
+            elementos_dibujar = [jugadores,bloques,enemigos]
             amb.ciclo_juego(ventana,elementos_dibujar)
-            #aquí va el reloj
+            reloj.tick(30)
     pg.quit()

@@ -2,14 +2,14 @@
 import math
 import os
 import sys
-
+sys.path.append(os.getcwd() + "/motor/")
 import ambiente
-import globales
 import pygame
+import globales
 from constantes import *
 from utilidades import *
 
-sys.path.append(os.getcwd() + "/motor/")
+
 
 class Jugador(pygame.sprite.Sprite):
     def __init__(self, pos):
@@ -71,55 +71,6 @@ class Jugador(pygame.sprite.Sprite):
         self.image = self.animacion[self.aux_animacion][self.frame]
         self.mask = pygame.mask.from_surface(self.image)
 
-    def colision_y(self):
-        if len(self.lista_colision)>0:
-            for b in ls_col:
-                if self.vely > 0:
-                    if self.rect.bottom > b.rect.top:
-                        self.salto=False
-                        self.rect.bottom = b.rect.top
-                        self.vely=0
-                elif self.vely < 0:
-                    if self.rect.top < b.rect.bottom:
-                        self.rect.top = b.rect.bottom
-                        self.vely=0
-        else:
-            self.gravedad()
-
-
-        if self.lista_colision:
-            for objeto in self.lista_colision:
-                if self.vely < 0:
-                    self.rect.top = objeto.rect.bottom
-                    self.vely = 0
-                    self.estados["saltando"] = False
-                    print("chocando arriba")
-                elif self.vely > 0:
-                        print("chocando abajo")
-                        #if self.rect.top < objeto.rect.bottom and self.rect.bottom > objeto.rect.bottom:
-                        self.estados["cayendo"] = False
-                        self.rect.bottom = objeto.rect.top
-                        self.vely = 0
-        else:
-            for bloque in self.lista_bloques:
-                if self.rect.bottom+1 > bloque.rect.top:
-                    self.estados["cayendo"] = False
-                else:
-                    self.estados["cayendo"] = True
-
-    def colision_x(self):
-        for objeto in self.lista_colision:
-            if self.velx == 0:
-                pass
-            elif self.velx > 0:
-                if self.rect.right > objeto.rect.left and self.rect.left < objeto.rect.left:
-                    self.rect.right = objeto.rect.left
-                    self.velx = 0
-            elif self.velx < 0:
-                if self.rect.left < objeto.rect.right and self.rect.right > objeto.rect.right:
-                    #ojo con eseto que lo movi y no recuerdo
-                    self.rect.left = objeto.rect.right
-                    self.velx = 0
 
     def comportamiento_limites(self):
         if self.choque == True:
