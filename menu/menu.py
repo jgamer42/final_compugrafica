@@ -1,9 +1,11 @@
 import os
 import sys
-sys.path.append(os.getcwd() + "/motor/")
+
 import globales as glob
 import pygame as pg
 from motor.constantes import *
+
+sys.path.append(os.getcwd() + "/motor/")
 
 
 class Icono(pg.sprite.Sprite):
@@ -34,9 +36,32 @@ IconoSalir = pg.image.load("./menu/IconoSalir.png")
 salir = Icono([917,575],IconoSalir)
 iconos.add(salir)
 
+FondContr = pg.image.load("./menu/controles.png")
+
+IconoAceptar = pg.image.load("./menu/IconoAceptar.png")
+aceptar = Icono([992,602], IconoAceptar)
+iconos.add(aceptar)
+
+IconoSonido = pg.image.load("./menu/iconoSonido.png")
+sonido = Icono([506,559], IconoSonido)
+iconos.add(sonido)
+
 def menu_inicio(ventana,opInicio,niveles,mouse,click):
     if opInicio["opciones"]:
-        pass
+        ventana.fill(NEGRO)
+        ventana.blit(FondContr,[0,0])
+        if aceptar.rect.collidepoint(mouse):
+            if click[0] == 1:
+                ventana.blit(IconoAceptar,[992,602])
+                opInicio["opciones"] = False
+            else:
+                ventana.blit(IconoAceptar,[992,602])
+        elif sonido.rect.collidepoint(mouse):
+            if click[0] == 1:
+                ventana.blit(IconoSonido,[506,559])
+                print("sonido off")
+            else:
+                ventana.blit(IconoSonido,[506,559])
     elif opInicio["creditos"]:
         pass
     else:
@@ -52,13 +77,13 @@ def menu_inicio(ventana,opInicio,niveles,mouse,click):
         elif opciones.rect.collidepoint(mouse):
             if click[0] == 1:
                 ventana.blit(IconoOpciones,[917,389])
-                niveles["opciones"] = True
+                opInicio["opciones"] = True
             else:
                 ventana.blit(IconoOpciones,[917,389])
         elif creditos.rect.collidepoint(mouse):
             if click[0] == 1:
                 ventana.blit(IconoCreditos,[917,482])
-                niveles["creditos"] = True
+                opInicio["creditos"] = True
             else:
                 ventana.blit(IconoCreditos,[917,482])
         elif salir.rect.collidepoint(mouse):
