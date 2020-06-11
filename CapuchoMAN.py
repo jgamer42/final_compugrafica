@@ -16,7 +16,7 @@ from enemigos.clases.observador import Observador
 from jugador.clases.jugador import Jugador
 from motor.constantes import *
 
-jugador = Jugador([128,ALTO-128])
+jugador = Jugador([128 + 1,ALTO-128 - 1])
 globales.jugadores.add(jugador)
 enemigo = Enemigo_base([500,500])
 globales.enemigos.add(enemigo)
@@ -47,7 +47,7 @@ if __name__ == "__main__":
             lista_colision = pygame.sprite.spritecollide(jugador,globales.bloques,False)
             jugador.lista_colision = lista_colision
             jugador.lista_bloques = globales.bloques
-            elementos_dibujar = [globales.bloques,globales.enemigos,globales.jugadores]
+            elementos_dibujar = [globales.jugadores,globales.bloques,globales.enemigos]
             amb.ciclo_juego(ventana,elementos_dibujar)
 
     pygame.quit()

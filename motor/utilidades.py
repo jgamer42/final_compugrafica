@@ -1,13 +1,15 @@
-import pygame
 import json
-import sys
 import os
-from  xml.dom import minidom
+import sys
+from xml.dom import minidom
+
+import globales as glob
+import pygame
+from bloque_base import Bloque_base
+from constantes import *
+
 sys.path.append(os.getcwd() + "/bloque/clases/")
 sys.path.append(os.getcwd() + "/motor/")
-import globales as glob
-from constantes import *
-from bloque_base import Bloque_base
 
 def crear_sprite(dir_sabana, dimensiones, columnas, filas=1, opcion=None):
     """
@@ -104,7 +106,7 @@ def cargar_mapa(matriz_mapa,dimensiones_mapa,ancho_recorte,alto_recorte,sprites,
                 bloque = Bloque_base(pos, sprite_cuadro)
                 receptor.add(bloque)
             con += 1
-        #print("\n")
-    #print(glob.bloques)
 
-#leer_mapa("./mapa/nivel1.json")
+
+def tiposBloques():
+    pass

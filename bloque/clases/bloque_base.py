@@ -1,10 +1,12 @@
 import os
 import sys
-sys.path.append(os.getcwd() + "/motor/")
+
 import ambiente
 import globales
 import pygame
 from constantes import *
+
+sys.path.append(os.getcwd() + "/motor/")
 
 class Bloque_base(pygame.sprite.Sprite):
     def __init__(self, pos, img=None):
@@ -19,6 +21,7 @@ class Bloque_base(pygame.sprite.Sprite):
         self.rect.y = pos[1]
         self.velx = 0
         self.vely = 0
+        self.tipo = None
 
     def update(self):
         self.vely = globales.vely_entorno
