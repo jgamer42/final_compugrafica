@@ -105,6 +105,7 @@ def cargar_mapa(matriz_mapa,dimensiones_mapa,ancho_recorte,alto_recorte,sprites,
                 pos = [pos_x, pos_y]
                 bloque = Bloque_base(pos, sprite_cuadro)
                 receptor.add(bloque)
+                #modificador = Bloque_base()
             con += 1
 
 

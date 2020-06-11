@@ -17,6 +17,7 @@ class Bloque_base(pygame.sprite.Sprite):
         else:
             self.image = img
         self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = pos[0]
         self.rect.y = pos[1]
         self.velx = 0
@@ -28,3 +29,4 @@ class Bloque_base(pygame.sprite.Sprite):
         self.velx = globales.velx_entorno
         self.rect.x += self.velx
         self.rect.y += self.vely
+        self.mask = pygame.mask.from_surface(self.image)

@@ -1,10 +1,11 @@
 import os
 import sys
+
 import pygame
+from constantes import *
 
 sys.path.append(os.getcwd()+"/motor/")
 sys.path.append(os.getcwd()+"/enemigos/")
-from constantes import *
 
 class  Enemigo_base(pygame.sprite.Sprite):
     def __init__(self, pos):
@@ -25,7 +26,7 @@ class  Enemigo_base(pygame.sprite.Sprite):
         self.rect.y = pos[1]
         self.velx = 0
         self.vely = 0
-    
+
     def agregar_observador(self,observador):
         self.lista_observadores.append(observador)
 
@@ -35,7 +36,16 @@ class  Enemigo_base(pygame.sprite.Sprite):
             self.notificar()
         else:
             self.registro += 1
-    
+
     def notificar(self):
         for observador in self.lista_observadores:
             observador.informar()
+
+
+class Observador:
+    def __init__(self,sujeto):
+        self.observado = sujeto.agregar_observador(self)
+
+    def informar(self):
+        #print("notificado")
+        pass

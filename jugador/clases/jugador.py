@@ -135,9 +135,7 @@ class Jugador(pygame.sprite.Sprite):
             else:
                 globales.velx_entorno = 0
 
-    def controles(self):
-        keys = pygame.key.get_pressed()
-
+    def controles(self,keys):
         if not keys[pygame.K_a] or not keys[pygame.K_d]:
                 self.velx = 0
                 self.direccion = 0

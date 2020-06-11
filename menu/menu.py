@@ -34,11 +34,7 @@ iconos.add(creditos)
 salir = Icono([917,575],IconoSalir)
 iconos.add(salir)
 #print(glob.cosa)
-
-def menu_inicio(ventana,niveles):
-    mouse = pg.mouse.get_pos()
-    click = pg.mouse.get_pressed()
-
+def menu_inicio(ventana,niveles, mouse,click):
     ventana.fill(NEGRO)
     ventana.blit(fondo,[0,0])
 
