@@ -1,9 +1,11 @@
 import os
 import sys
-sys.path.append(os.getcwd() + "/motor/")
+
 import globales as glob
-from motor.constantes import *
 import pygame as pg
+from motor.constantes import *
+
+sys.path.append(os.getcwd() + "/motor/")
 
 fondo = pg.image.load("./menu/Inicio.png")
 IconoJugar = pg.image.load("./menu/IconoJugar.png")
@@ -33,40 +35,44 @@ salir = Icono([917,575],IconoSalir)
 iconos.add(salir)
 #print(glob.cosa)
 
-def menu_inicio(ventana,evento,control):
-    print(control)
+def menu_inicio(ventana,niveles):
     mouse = pg.mouse.get_pos()
     click = pg.mouse.get_pressed()
+
     ventana.fill(NEGRO)
     ventana.blit(fondo,[0,0])
+
     if jugar.rect.collidepoint(mouse):
+        print("colisionando en jugar")
         if click[0] == 1:
             ventana.blit(IconoJugar,[917,297])
-            control["inicio"]= False
-            control["nivel1"]=True
+            niveles["inicio"] = False
+            niveles["nivel1"] = True
         else:
             ventana.blit(IconoJugar,[917,297])
     elif opciones.rect.collidepoint(mouse):
         if click[0] == 1:
             print("opciones")
             ventana.blit(IconoOpciones,[917,389])
-            glob.niveles["inicio"] = False
-            glob.niveles["opciones"] = True
+            niveles["inicio"] = False
+            niveles["opciones"] = True
         else:
             ventana.blit(IconoOpciones,[917,389])
     elif creditos.rect.collidepoint(mouse):
         if click[0] == 1:
             print("creditos")
             ventana.blit(IconoCreditos,[917,482])
-            glob.niveles["inicio"] = False
-            glob.niveles["creditos"] = True
+            niveles["inicio"] = False
+            niveles["creditos"] = True
         else:
             ventana.blit(IconoCreditos,[917,482])
     elif salir.rect.collidepoint(mouse):
         if click[0] == 1:
             print("salir")
             ventana.blit(IconoSalir,[917,575])
-            glob.en_juego = False
+            niveles["inicio"] = False
+            return False
         else:
             ventana.blit(IconoSalir,[917,575])
     pg.display.flip()
+    return True

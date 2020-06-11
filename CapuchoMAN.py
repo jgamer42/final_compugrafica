@@ -5,16 +5,16 @@
 # - a la hora de crear nuevas clase nombrar el archivo en minisculas y la clase con la primera en mayuscula
 # - mantener coherencia entre plural y singular
 # - tratar de no subir word, psd, fsd, o cualquier extension o archivo compilado
+import menu.menu as menu
+import motor.ambiente as amb
+import motor.globales as globales
+import motor.utilidades as util
 import pygame
 from bloque.clases.bloque_base import Bloque_base
 from enemigos.clases.enemigo_base import Enemigo_base
 from enemigos.clases.observador import Observador
 from jugador.clases.jugador import Jugador
 from motor.constantes import *
-import motor.ambiente as amb
-import motor.globales as globales
-import motor.utilidades as util
-import menu.menu as menu
 
 jugador = Jugador([128,ALTO-128])
 globales.jugadores.add(jugador)
@@ -34,12 +34,14 @@ if __name__ == "__main__":
         while globales.niveles["inicio"] and globales.en_juego:
             for evento in pygame.event.get():
                 if evento.type == pygame.QUIT:
+                    pygame.quit()
                     globales.en_juego = False
-                menu.menu_inicio(ventana,evento,globales.niveles)
+                globales.en_juego = menu.menu_inicio(ventana,globales.niveles)
 
         while  globales.niveles["nivel1"] and globales.en_juego:
             for evento in pygame.event.get():
                 if evento.type == pygame.QUIT:
+                    pygame.quit()
                     globales.en_juego = False
                 jugador.controles()
             lista_colision = pygame.sprite.spritecollide(jugador,globales.bloques,False)
@@ -47,3 +49,5 @@ if __name__ == "__main__":
             jugador.lista_bloques = globales.bloques
             elementos_dibujar = [globales.bloques,globales.enemigos,globales.jugadores]
             amb.ciclo_juego(ventana,elementos_dibujar)
+
+    pygame.quit()
