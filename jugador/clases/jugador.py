@@ -29,40 +29,40 @@ class Jugador(pygame.sprite.Sprite):
         self.rect.y = pos[1]
         self.velx = 0
         self.vely = 0
-        self.estados = {"saltando": False, "corriendo": False,"cayendo":True}
-        self.lista_colision = []
-        self.lista_bloques = None
+        self.saltando = False
+        self.bloques = None
         self.choque = False
 
     def update(self):
         self.rect.x += self.velx
-        ls_col=pygame.sprite.spritecollide(self,self.lista_bloques,False)
-        if len(ls_col)>0:
+        ls_col = pygame.sprite.spritecollide(self,self.bloques,False)
+        if len(ls_col) > 0:
             for b in ls_col:
-                self.choque=True
-                if self.velx>0:
+                self.choque = True
+                if self.velx > 0:
                     if self.rect.right > b.rect.left:
-                        self.rect.right=b.rect.left
-                        self.velx=0
-                elif self.velx<0:
+                        self.rect.right = b.rect.left
+                        self.velx = 0
+                elif self.velx < 0:
                     if self.rect.left < b.rect.right:
                         self.rect.left = b.rect.right
-                        self.velx=0
+                        self.velx = 0
         else:
-            self.choque=False
+            self.choque = False
+
         self.rect.y += self.vely
-        ls_col=pygame.sprite.spritecollide(self,self.lista_bloques,False)
-        if len(ls_col)>0:
+        ls_col = pygame.sprite.spritecollide(self,self.bloques,False)
+        if len(ls_col) > 0:
             for b in ls_col:
                 if self.vely > 0:
                     if self.rect.bottom > b.rect.top:
-                        self.salto=False
+                        self.saltando = False
                         self.rect.bottom = b.rect.top
-                        self.vely=0
+                        self.vely = 0
                 elif self.vely < 0:
                     if self.rect.top < b.rect.bottom:
                         self.rect.top = b.rect.bottom
-                        self.vely=0
+                        self.vely = 0
         else:
             ambiente.gravedad(self)
 
@@ -90,6 +90,7 @@ class Jugador(pygame.sprite.Sprite):
         if not keys[pygame.K_a] or not keys[pygame.K_d]:
                 self.velx = 0
                 self.direccion = 0
+                globales.velx_entorno = 0 #nueva configuracion
 
         if keys[pygame.K_a]:
             if keys[pygame.K_LSHIFT]:
@@ -112,12 +113,9 @@ class Jugador(pygame.sprite.Sprite):
                 self.velx = 8
 
         if keys[pygame.K_SPACE]:
-            if not self.estados["saltando"]:
-                self.estados["saltando"] = True
-                self.estados["cayendo"] = True
+            if not self.saltando:
                 self.vely = -50
-            else:
-                self.estados["saltando"] = False
+                self.saltando = True
 
     def crear_animacion(self):
         animacion = []

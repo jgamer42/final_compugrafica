@@ -30,8 +30,9 @@ enemigos.add(enemigo)
 
 #alarma = Observador(enemigo)
 reloj = pg.time.Clock()
-en_juego = True
+jugar = True
 niveles = {"inicio": True, "nivel1": False, "nivel2": False, "creditos": False, "opciones": False}
+opInicio = {"opciones": False, "creditos": False}
 game_over = False
 if __name__ == "__main__":
     pg.init()
@@ -41,19 +42,21 @@ if __name__ == "__main__":
     pg.display.set_icon(icono_juego)
     pg.display.set_caption("CapuchoMAN")
 
-    while en_juego:
-        while niveles["inicio"] and en_juego:
+    while jugar:
+        while niveles["inicio"] and jugar:
             for evento in pg.event.get():
                 if evento.type == pg.QUIT:
-                    en_juego = False
-                en_juego = menu.menu_inicio(ventana,niveles,pg.mouse.get_pos(),pg.mouse.get_pressed())
+                    jugar = False
+                    niveles["inicio"] = False
+                else:
+                    jugar = menu.menu_inicio(ventana,opInicio,niveles,pg.mouse.get_pos(),pg.mouse.get_pressed())
 
-        while  niveles["nivel1"] and en_juego:
+        while  niveles["nivel1"] and jugar:
             for evento in pg.event.get():
                 if evento.type == pg.QUIT:
-                    en_juego = False
+                    jugar = False
                 jugador.controles(pg.key.get_pressed())
-            jugador.lista_bloques = bloques
+            jugador.bloques = bloques
             elementos_dibujar = [jugadores,bloques,enemigos]
             amb.ciclo_juego(ventana,elementos_dibujar)
             reloj.tick(30)
