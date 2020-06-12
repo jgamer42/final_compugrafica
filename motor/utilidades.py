@@ -2,12 +2,18 @@ import json
 import os
 import sys
 from xml.dom import minidom
-sys.path.append(os.getcwd() + "/bloque/clases/")
-sys.path.append(os.getcwd() + "/motor/")
+
 import pygame
 from bloque_base import Bloque_base
 from constantes import *
 
+sys.path.append(os.getcwd() + "/bloque/clases/")
+sys.path.append(os.getcwd() + "/motor/")
+
+matriz_muros = [1,2,6,7,8,9,10,16,17,18,19,20,21,24,26,29,30,31,36,43]
+matriz_enemigos = [11,22]
+matriz_bonus = [13]
+matriz_ambientales = [19,39]
 
 def crear_sprite(dir_sabana, dimensiones, columnas, filas=1, opcion=None):
     """
@@ -100,10 +106,22 @@ def cargar_mapa(matriz_mapa,dimensiones_mapa,ancho_recorte,alto_recorte,sprites,
                 pos_x = ancho_recorte * j
                 pos_y = alto_recorte * i
                 pos = [pos_x, pos_y]
-                bloque = Bloque_base(pos, sprite_cuadro)
-                receptor.add(bloque)
+                if matriz_mapa[con] in matriz_muros:
+                    bloque = Bloque_base(pos, sprite_cuadro)
+                    bloque.tipo = "muro"
+                    receptor.add(bloque)
+                '''
+                elif matriz_mapa[con] in matriz_enemigos:
+                    enemigo = Enemigo(pos, sprite_cuadro)
+                    enemigo.tipo = "enemigo"
+                    enemigos.add(enemigo)
+                elif matriz_mapa[con] in matriz_bonus:
+                    bono = Bono(pos,sprite_cuadro)
+                    bono.tipo = "bono"
+                    bonos.add(bono)
+                elif matriz_mapa[con] in matriz_ambientales:
+                    elemento = Ambiental(pos,sprite_cuadro)
+                    elemento.tipo = "ambiente"
+                    ambientales.add(elemento)
+                '''
             con += 1
-
-
-def tiposBloques():
-    pass

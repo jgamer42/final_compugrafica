@@ -2,12 +2,14 @@
 import math
 import os
 import sys
-sys.path.append(os.getcwd() + "/motor/")
+
 import ambiente
-import pygame
 import globales
+import pygame
 from constantes import *
 from utilidades import *
+
+sys.path.append(os.getcwd() + "/motor/")
 
 
 
@@ -15,7 +17,7 @@ class Jugador(pygame.sprite.Sprite):
     def __init__(self, pos):
         super().__init__()
         self.tipo = "jugador"
-        self.vidas = 3
+        self.vidas = 1
         self.salud = 1000
         self.puntos = 0
         self.animacion = self.crear_animacion()
@@ -32,26 +34,27 @@ class Jugador(pygame.sprite.Sprite):
         self.saltando = False
         self.bloques = None
         self.choque = False
+        self.game_over = False
 
     def update(self):
         self.rect.x += self.velx
-        ls_col = pygame.sprite.spritecollide(self,self.bloques,False)
+        ls_col = pygame.sprite.spritecollide(self,self.bloques,False,pygame.sprite.collide_mask)
         if len(ls_col) > 0:
             for b in ls_col:
                 self.choque = True
                 if self.velx > 0:
-                    if self.rect.right > b.rect.left:
+                    if self.rect.right > b.rect.left or self.rect.left > objeto.rect.left or self.rect.left > objeto.rect.right:
                         self.rect.right = b.rect.left
                         self.velx = 0
                 elif self.velx < 0:
-                    if self.rect.left < b.rect.right:
+                    if self.rect.left < b.rect.right or self.rect.right < objeto.rect.right or self.rect.left < objeto.rect.left:
                         self.rect.left = b.rect.right
                         self.velx = 0
         else:
             self.choque = False
 
         self.rect.y += self.vely
-        ls_col = pygame.sprite.spritecollide(self,self.bloques,False)
+        ls_col = pygame.sprite.spritecollide(self,self.bloques,False,pygame.sprite.collide_mask)
         if len(ls_col) > 0:
             for b in ls_col:
                 if self.vely > 0:
@@ -65,6 +68,11 @@ class Jugador(pygame.sprite.Sprite):
                         self.vely = 0
         else:
             ambiente.gravedad(self)
+
+        if self.rect.bottom > ALTO:
+            self.vidas -= 1
+            if self.vidas == 0:
+                self.game_over = True
 
         self.comportamiento_limites()
         self.frame = animar(self.frame, 28, self.direccion)
@@ -90,28 +98,20 @@ class Jugador(pygame.sprite.Sprite):
         if not keys[pygame.K_a] or not keys[pygame.K_d]:
                 self.velx = 0
                 self.direccion = 0
-                globales.velx_entorno = 0 #nueva configuracion
-
         if keys[pygame.K_a]:
+            self.direccion = -1
+            self.aux_animacion = 1
             if keys[pygame.K_LSHIFT]:
-                    self.direccion = -1
-                    self.aux_animacion = 1
-                    self.velx = -13
+                    self.velx = -14
             else:
-                self.direccion = -1
-                self.aux_animacion = 1
                 self.velx = -8
-
         if keys[pygame.K_d]:
+            self.direccion = 1
+            self.aux_animacion = 0
             if keys[pygame.K_LSHIFT]:
-                    self.direccion = 1
-                    self.aux_animacion = 0
-                    self.velx = 13
+                    self.velx = 14
             else:
-                self.direccion = 1
-                self.aux_animacion = 0
                 self.velx = 8
-
         if keys[pygame.K_SPACE]:
             if not self.saltando:
                 self.vely = -50

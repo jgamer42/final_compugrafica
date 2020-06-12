@@ -34,6 +34,7 @@ jugar = True
 niveles = {"inicio": True, "nivel1": False, "nivel2": False, "creditos": False, "opciones": False}
 opInicio = {"opciones": False, "creditos": False}
 game_over = False
+
 if __name__ == "__main__":
     pg.init()
     util.leer_mapa("mapa/mapaA1.json",bloques)
@@ -59,5 +60,11 @@ if __name__ == "__main__":
             jugador.bloques = bloques
             elementos_dibujar = [jugadores,bloques,enemigos]
             amb.ciclo_juego(ventana,elementos_dibujar)
+
+            game_over = jugador.game_over
+            if game_over:
+                niveles["nivel1"] = False
+                niveles["inicio"] = True
+
             reloj.tick(30)
     pg.quit()

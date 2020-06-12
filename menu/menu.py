@@ -8,7 +8,7 @@ from motor.utilidades import *
 
 sys.path.append(os.getcwd() + "/motor/")
 
-
+pygame.init()
 
 class Icono(pg.sprite.Sprite):
     def __init__(self,pos,icon):
