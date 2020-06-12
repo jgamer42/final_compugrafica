@@ -4,12 +4,10 @@ import sys
 from xml.dom import minidom
 
 import pygame
-from bloque_base import Bloque_base
-from constantes import *
-
 sys.path.append(os.getcwd() + "/bloque/clases/")
 sys.path.append(os.getcwd() + "/motor/")
-
+from bloque_base import Bloque_base
+from constantes import *
 matriz_muros = [1,2,6,7,8,9,10,16,17,18,19,20,21,24,26,29,30,31,36,43]
 matriz_enemigos = [11,22]
 matriz_bonus = [13]

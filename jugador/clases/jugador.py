@@ -16,6 +16,7 @@ sys.path.append(os.getcwd() + "/motor/")
 class Jugador(pygame.sprite.Sprite):
     def __init__(self, pos):
         super().__init__()
+        self.posInicial = pos
         self.tipo = "jugador"
         self.vidas = 1
         self.salud = 1000
@@ -73,12 +74,12 @@ class Jugador(pygame.sprite.Sprite):
             self.vidas -= 1
             if self.vidas == 0:
                 self.game_over = True
+                #self.reiniciar()
 
         self.comportamiento_limites()
         self.frame = animar(self.frame, 28, self.direccion)
         self.image = self.animacion[self.aux_animacion][self.frame]
         self.mask = pygame.mask.from_surface(self.image)
-
 
     def comportamiento_limites(self):
         if self.choque == True:

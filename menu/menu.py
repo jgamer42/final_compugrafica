@@ -18,6 +18,7 @@ class Icono(pg.sprite.Sprite):
         self.rect.x = pos[0]
         self.rect.y = pos[1]
         self.click = False
+
 pg.mixer.init()
 fondo = pg.image.load("./menu/Inicio.png")
 clickP = pg.mixer.Sound('./sonidos/Click.ogg')
@@ -65,6 +66,16 @@ def menu_inicio(ventana,opInicio,niveles,mouse,click):
                 ventana.blit(IconoSonido,[506,559])
                 clickP.play()
                 print("sonido off")
+                pygame.mixer.music.stop()
+                '''
+                oes, leyendo un poco sobre esto y analizando el tema,
+                creo que deberia existir una clase que se encargue de esto,
+                saber cuando pausar y cuando volver a poner la musica,
+                ademas creo que se requiere de esa clase para agregar cada tema
+                porfa consultar los links que envie y terminarla porfa
+                ademas creo que esa clase debe controlar todos los sonidos del juego,
+                saber en donde esta y que sonidos debe poner
+                '''
             else:
                 ventana.blit(IconoSonido,[506,559])
     elif opInicio["creditos"]:

@@ -1,11 +1,3 @@
-# importante leer, son las reglas de desarollo
-# - para este progama se usara snake case (esto_es_un_ejemplo) para la notacion de variables
-# - nombres de variables y archivos en español
-# - el de tema de los parentesis y espacios esta automatizado, cuando hacen el push el los acomoda
-# - a la hora de crear nuevas clase nombrar el archivo en minisculas y la clase con la primera en mayuscula
-# - mantener coherencia entre plural y singular
-# - tratar de no subir word, psd, fsd, o cualquier extension o archivo compilado
-
 import menu.menu as menu
 import motor.ambiente as amb
 import motor.globales as globales
@@ -17,14 +9,37 @@ from enemigos.clases.enemigo_base import Enemigo_base
 from jugador.clases.jugador import Jugador
 from motor.constantes import *
 
+pg.init()
+pg.mixer.init()
+
+musicMenu = pg.mixer.Sound("./sonidos/menu.ogg")
+
+musicJuego = pg.mixer.music.load("./sonidos/rock1.ogg")
+pg.mixer.music.queue("./sonidos/rock2.ogg")
+pg.mixer.music.queue("./sonidos/rock3.ogg")
+
+pg.mixer.music.play()
+
 jugadores = pg.sprite.Group()
 enemigos = pg.sprite.Group()
 bloques = pg.sprite.Group()
 
 
+'''
+pygame.mixer.music.set_endevent( )
+hacer que la música envíe un evento cuando la reproducción se detenga
+set_endevent () -> Ninguno
+set_endevent (type) -> None
+Esto hace que pygame señale (por medio de la cola de eventos) cuando la música termina de reproducirse. El argumento determina el tipo de evento que se pondrá en cola.
 
-jugador = Jugador([128 + 1,ALTO-128 - 1])
-jugadores.add(jugador)
+El evento se pondrá en cola cada vez que termine la música, no solo la primera vez. Para evitar que el evento se ponga en cola, llame a este método sin argumento.
+'''
+
+
+
+
+#jugador = Jugador([128 + 1,ALTO-128 - 1])
+#jugadores.add(jugador)
 enemigo = Enemigo_base([500,500])
 enemigos.add(enemigo)
 
@@ -36,7 +51,6 @@ opInicio = {"opciones": False, "creditos": False}
 game_over = False
 
 if __name__ == "__main__":
-    pg.init()
     util.leer_mapa("mapa/mapaA1.json",bloques)
     ventana = pg.display.set_mode([ANCHO,ALTO])
     icono_juego = pg.image.load('CapuchoMAN.png')
@@ -52,6 +66,8 @@ if __name__ == "__main__":
                 else:
                     jugar = menu.menu_inicio(ventana,opInicio,niveles,pg.mouse.get_pos(),pg.mouse.get_pressed())
 
+        jugador = Jugador([128 + 1,ALTO-128 - 1])
+        jugadores.add(jugador)
         while  niveles["nivel1"] and jugar:
             for evento in pg.event.get():
                 if evento.type == pg.QUIT:
@@ -65,6 +81,9 @@ if __name__ == "__main__":
             if game_over:
                 niveles["nivel1"] = False
                 niveles["inicio"] = True
+                game_over = False
+                jugadores.remove(jugador)
+
 
             reloj.tick(30)
     pg.quit()
