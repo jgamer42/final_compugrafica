@@ -20,7 +20,7 @@ class Icono(pg.sprite.Sprite):
         self.click = False
 pg.mixer.init()
 fondo = pg.image.load("./menu/Inicio.png")
-clickP = pg.mixer.Sound('./sonidos/Click.wav')
+clickP = pg.mixer.Sound('./sonidos/Click.ogg')
 iconos = pg.sprite.Group()
 
 IconoJugar = pg.image.load("./menu/IconoJugar.png")
