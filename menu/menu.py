@@ -1,11 +1,13 @@
 import os
 import sys
 
-import globales as glob
+#import globales as glob
 import pygame as pg
 from motor.constantes import *
+from motor.utilidades import *
 
 sys.path.append(os.getcwd() + "/motor/")
+
 
 
 class Icono(pg.sprite.Sprite):
@@ -16,8 +18,9 @@ class Icono(pg.sprite.Sprite):
         self.rect.x = pos[0]
         self.rect.y = pos[1]
         self.click = False
-
+pg.mixer.init()
 fondo = pg.image.load("./menu/Inicio.png")
+clickP = pg.mixer.Sound('./sonidos/Click.wav')
 iconos = pg.sprite.Group()
 
 IconoJugar = pg.image.load("./menu/IconoJugar.png")
@@ -52,6 +55,7 @@ def menu_inicio(ventana,opInicio,niveles,mouse,click):
         ventana.blit(FondContr,[0,0])
         if aceptar.rect.collidepoint(mouse):
             if click[0] == 1:
+                clickP.play()
                 ventana.blit(IconoAceptar,[992,602])
                 opInicio["opciones"] = False
             else:
@@ -59,6 +63,7 @@ def menu_inicio(ventana,opInicio,niveles,mouse,click):
         elif sonido.rect.collidepoint(mouse):
             if click[0] == 1:
                 ventana.blit(IconoSonido,[506,559])
+                clickP.play()
                 print("sonido off")
             else:
                 ventana.blit(IconoSonido,[506,559])
@@ -69,6 +74,7 @@ def menu_inicio(ventana,opInicio,niveles,mouse,click):
         ventana.blit(fondo,[0,0])
         if jugar.rect.collidepoint(mouse):
             if click[0] == 1:
+                clickP.play()
                 ventana.blit(IconoJugar,[917,297])
                 niveles["inicio"] = False
                 niveles["nivel1"] = True
@@ -76,18 +82,21 @@ def menu_inicio(ventana,opInicio,niveles,mouse,click):
                 ventana.blit(IconoJugar,[917,297])
         elif opciones.rect.collidepoint(mouse):
             if click[0] == 1:
+                clickP.play()
                 ventana.blit(IconoOpciones,[917,389])
                 opInicio["opciones"] = True
             else:
                 ventana.blit(IconoOpciones,[917,389])
         elif creditos.rect.collidepoint(mouse):
             if click[0] == 1:
+                clickP.play()
                 ventana.blit(IconoCreditos,[917,482])
                 opInicio["creditos"] = True
             else:
                 ventana.blit(IconoCreditos,[917,482])
         elif salir.rect.collidepoint(mouse):
             if click[0] == 1:
+                clickP.play()
                 ventana.blit(IconoSalir,[917,575])
                 niveles["inicio"] = False
                 return False
