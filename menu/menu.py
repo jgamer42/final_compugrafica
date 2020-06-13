@@ -19,9 +19,9 @@ class Icono(pg.sprite.Sprite):
         self.rect.y = pos[1]
         self.click = False
 
-pg.mixer.init()
+#pg.mixer.init()
 fondo = pg.image.load("./menu/Inicio.png")
-clickP = pg.mixer.Sound('./sonidos/Click.ogg')
+
 iconos = pg.sprite.Group()
 
 IconoJugar = pg.image.load("./menu/IconoJugar.png")
@@ -46,38 +46,41 @@ IconoAceptar = pg.image.load("./menu/IconoAceptar.png")
 aceptar = Icono([992,602], IconoAceptar)
 iconos.add(aceptar)
 
-IconoSonido = pg.image.load("./menu/iconoSonido.png")
-sonido = Icono([506,559], IconoSonido)
+IconoSonidoON = pg.image.load("./menu/iconoSonidoON.png")
+IconoSonidoOFF = pg.image.load("./menu/iconoSonidoOFF.png")
+sonido = Icono([506,559], IconoSonidoOFF)
 iconos.add(sonido)
 
-def menu_inicio(ventana,opInicio,niveles,mouse,click):
+def inicio(ventana,opInicio,estados,mouse,click,sonidos):
     if opInicio["opciones"]:
         ventana.fill(NEGRO)
-        ventana.blit(FondContr,[0,0])
+        if sonidos.getMudo():
+            ventana.blit(FondContr,[0,0])
+            ventana.blit(IconoSonidoOFF,[506,559])
+        else:
+            ventana.blit(FondContr,[0,0])
         if aceptar.rect.collidepoint(mouse):
             if click[0] == 1:
-                clickP.play()
+                sonidos.click()
                 ventana.blit(IconoAceptar,[992,602])
                 opInicio["opciones"] = False
             else:
                 ventana.blit(IconoAceptar,[992,602])
         elif sonido.rect.collidepoint(mouse):
-            if click[0] == 1:
-                ventana.blit(IconoSonido,[506,559])
-                clickP.play()
-                print("sonido off")
-                pygame.mixer.music.stop()
-                '''
-                oes, leyendo un poco sobre esto y analizando el tema,
-                creo que deberia existir una clase que se encargue de esto,
-                saber cuando pausar y cuando volver a poner la musica,
-                ademas creo que se requiere de esa clase para agregar cada tema
-                porfa consultar los links que envie y terminarla porfa
-                ademas creo que esa clase debe controlar todos los sonidos del juego,
-                saber en donde esta y que sonidos debe poner
-                '''
+            if sonidos.getMudo():
+                if click[0] == 1:
+                    ventana.blit(IconoSonidoON,[506,559])
+                    sonidos.click()
+                    sonidos.mudo()
+                else:
+                    ventana.blit(IconoSonidoON,[506,559])
             else:
-                ventana.blit(IconoSonido,[506,559])
+                if click[0] == 1:
+                    ventana.blit(IconoSonidoOFF,[506,559])
+                    sonidos.click()
+                    sonidos.mudo()
+                else:
+                    ventana.blit(IconoSonidoOFF,[506,559])
     elif opInicio["creditos"]:
         pass
     else:
@@ -85,31 +88,31 @@ def menu_inicio(ventana,opInicio,niveles,mouse,click):
         ventana.blit(fondo,[0,0])
         if jugar.rect.collidepoint(mouse):
             if click[0] == 1:
-                clickP.play()
+                sonidos.click()
                 ventana.blit(IconoJugar,[917,297])
-                niveles["inicio"] = False
-                niveles["nivel1"] = True
+                estados["inicio"] = False
+                estados["nivel1"] = True
             else:
                 ventana.blit(IconoJugar,[917,297])
         elif opciones.rect.collidepoint(mouse):
             if click[0] == 1:
-                clickP.play()
+                sonidos.click()
                 ventana.blit(IconoOpciones,[917,389])
                 opInicio["opciones"] = True
             else:
                 ventana.blit(IconoOpciones,[917,389])
         elif creditos.rect.collidepoint(mouse):
             if click[0] == 1:
-                clickP.play()
+                sonidos.click()
                 ventana.blit(IconoCreditos,[917,482])
                 opInicio["creditos"] = True
             else:
                 ventana.blit(IconoCreditos,[917,482])
         elif salir.rect.collidepoint(mouse):
             if click[0] == 1:
-                clickP.play()
+                sonidos.click()
                 ventana.blit(IconoSalir,[917,575])
-                niveles["inicio"] = False
+                estados["inicio"] = False
                 return False
             else:
                 ventana.blit(IconoSalir,[917,575])
