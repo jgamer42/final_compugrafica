@@ -2,6 +2,7 @@
 ANCHO = 1280
 ALTO = 704
 GRAVEDAD = 5
+FPS  = 30
 # colores
 NEGRO = [0, 0, 0]
 BLANCO = [255, 255, 255]

@@ -39,36 +39,59 @@ class Jugador(pygame.sprite.Sprite):
 
     def update(self):
         self.rect.x += self.velx
-        ls_col = pygame.sprite.spritecollide(self,self.bloques,False,pygame.sprite.collide_mask)
-        if len(ls_col) > 0:
-            for b in ls_col:
+        self.colision_x()
+        self.rect.y += self.vely
+        self.colision_y()
+        #ESTO NO PUEDE IR AQUI 
+        if self.rect.bottom > ALTO:
+            self.vidas -= 1
+            if self.vidas == 0:
+                self.game_over = True
+        self.comportamiento_limites()
+        self.frame = animar(self.frame, 28, self.direccion)
+        self.image = self.animacion[self.aux_animacion][self.frame]
+        self.mask = pygame.mask.from_surface(self.image)
+    
+    def colision_x(self):
+        lista_colision = pygame.sprite.spritecollide(self,self.bloques,False,pygame.sprite.collide_mask)
+        if len(lista_colision) > 0:
+            for colision in lista_colision:
                 self.choque = True
                 if self.velx > 0:
-                    if self.rect.right > b.rect.left or self.rect.left > objeto.rect.left or self.rect.left > objeto.rect.right:
-                        self.rect.right = b.rect.left
+                    if self.rect.right > colision.rect.left or self.rect.left > colision.rect.left or self.rect.left > colision.rect.right:
+                        self.rect.right = colision.rect.left
                         self.velx = 0
+                        if colision.tipo == "lava":
+                            self.salud -= colision.daño
                 elif self.velx < 0:
-                    if self.rect.left < b.rect.right or self.rect.right < objeto.rect.right or self.rect.left < objeto.rect.left:
-                        self.rect.left = b.rect.right
+                    if self.rect.left < colision.rect.right or self.rect.right < colision.rect.right or self.rect.left < colision.rect.left:
+                        self.rect.left = colision.rect.right
                         self.velx = 0
+                        if colision.tipo == "lava":
+                            self.salud -= colision.daño
         else:
             self.choque = False
 
-        self.rect.y += self.vely
-        ls_col = pygame.sprite.spritecollide(self,self.bloques,False,pygame.sprite.collide_mask)
-        if len(ls_col) > 0:
-            for b in ls_col:
+    def colision_y(self):
+        lista_colision = pygame.sprite.spritecollide(self,self.bloques,False,pygame.sprite.collide_mask)
+        if len(lista_colision) > 0:
+            for colision in lista_colision:
                 if self.vely > 0:
-                    if self.rect.bottom > b.rect.top:
+                    if self.rect.bottom > colision.rect.top:
                         self.saltando = False
-                        self.rect.bottom = b.rect.top
+                        self.rect.bottom = colision.rect.top
                         self.vely = 0
+                        if colision.tipo == "pinchos" or colision.tipo == "lava":
+                            self.salud -= colision.daño 
                 elif self.vely < 0:
-                    if self.rect.top < b.rect.bottom:
-                        self.rect.top = b.rect.bottom
+                    if self.rect.top < colision.rect.bottom:
+                        self.rect.top = colision.rect.bottom
                         self.vely = 0
+                        if colision.tipo == "pinchos" :
+                            self.salud -= colision.daño 
         else:
             ambiente.gravedad(self)
+
 
         if self.rect.bottom > ALTO:
             self.vidas -= 1
@@ -81,11 +104,12 @@ class Jugador(pygame.sprite.Sprite):
         self.image = self.animacion[self.aux_animacion][self.frame]
         self.mask = pygame.mask.from_surface(self.image)
 
+
     def comportamiento_limites(self):
         if self.choque == True:
             globales.velx_entorno = 0
         else:
-            if self.rect.x <= 0 or self.rect.right >= ANCHO:
+            if self.rect.x <= 0 or self.rect.right >= ANCHO - 64 * 4:
                 self.velx = 0
                 globales.velx_entorno = -10 * self.direccion
                 if self.rect.x < 0 :

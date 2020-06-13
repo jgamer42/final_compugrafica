@@ -3,9 +3,8 @@ import motor.ambiente as amb
 import motor.globales as globales
 import motor.utilidades as util
 import pygame as pg
-from bloque.clases.bloque_base import Bloque_base
-from enemigos.clases.enemigo_base import Enemigo_base
-#from enemigos.clases.observador import Observador
+from enemigos.clases.esmad import Esmad
+from enemigos.clases.observador_base import Observador_base
 from jugador.clases.jugador import Jugador
 from motor.constantes import *
 from sonidos.sonidos import *
@@ -16,10 +15,14 @@ jugadores = pg.sprite.Group()
 enemigos = pg.sprite.Group()
 bloques = pg.sprite.Group()
 
-enemigo = Enemigo_base([500,500])
+jugador = Jugador([128 + 1,ALTO-128 - 1])
+jugadores.add(jugador)
+enemigo = Esmad([500,500])
+o = Observador_base(enemigo,5)
+
 enemigos.add(enemigo)
 
-#alarma = Observador(enemigo)
+
 reloj = pg.time.Clock()
 estados = {"jugando": True, "inicio": True, "nivel1": False, "nivel2": False, "creditos": False, "opciones": False}
 opInicio = {"opciones": False, "creditos": False}
@@ -55,15 +58,12 @@ if __name__ == "__main__":
             jugador.bloques = bloques
             elementos_dibujar = [jugadores,bloques,enemigos]
             amb.ciclo_juego(ventana,elementos_dibujar)
-            sonidos.update(estados)
-
+            onidos.update(estados)
             game_over = jugador.game_over
             if game_over:
-                estados["nivel1"] = False
-                estados["inicio"] = True
+                niveles["nivel1"] = False
+                niveles["inicio"] = True
                 game_over = False
                 jugadores.remove(jugador)
-
-
-            reloj.tick(30)
+            reloj.tick(FPS)
     pg.quit()

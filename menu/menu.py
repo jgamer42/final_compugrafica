@@ -1,7 +1,6 @@
 import os
 import sys
 
-#import globales as glob
 import pygame as pg
 from motor.constantes import *
 from motor.utilidades import *

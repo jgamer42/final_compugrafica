@@ -1,24 +1,19 @@
 import os
 import sys
 
+import globales
 import pygame
 from constantes import *
 
 sys.path.append(os.getcwd()+"/motor/")
 sys.path.append(os.getcwd()+"/enemigos/")
 
+
+
 class  Enemigo_base(pygame.sprite.Sprite):
     def __init__(self, pos):
         super().__init__()
         self.lista_observadores = []
-        self.estado = {
-            "disparando":
-                {
-                    "bandera": False,
-                    "tiempo": 50
-                }
-            }
-        self.registro = 0
         self.image = pygame.Surface([50, 50])
         self.image.fill(AZUL)
         self.rect = self.image.get_rect()
@@ -26,26 +21,30 @@ class  Enemigo_base(pygame.sprite.Sprite):
         self.rect.y = pos[1]
         self.velx = 0
         self.vely = 0
+        self.direccion = 1
 
     def agregar_observador(self,observador):
         self.lista_observadores.append(observador)
 
     def update(self):
-        if self.registro == self.estado["disparando"]["tiempo"]:
-            self.registro = 0
+        if self.en_camara():
+            self.rect.x += self.velx*self.direccion
+            self.rect.y += self.vely*self.direccion
+            self.animar()
             self.notificar()
         else:
-            self.registro += 1
+            self.rect.x += globales.velx_entorno
+            self.rect.y += globales.vely_entorno
 
     def notificar(self):
         for observador in self.lista_observadores:
             observador.informar()
 
+    def en_camara(self):
+        if self.rect.right > 64*2 and self.rect.right < ANCHO-64*2:
+            return True
+        else:
+            return False
 
-class Observador:
-    def __init__(self,sujeto):
-        self.observado = sujeto.agregar_observador(self)
-
-    def informar(self):
-        #print("notificado")
+    def animar(self):
         pass
