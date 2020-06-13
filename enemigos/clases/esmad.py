@@ -1,11 +1,10 @@
 import os
 import sys
 
-import utilidades as util
-from enemigo_base import Enemigo_base
-
 sys.path.append(os.getcwd()+"/motor/")
 sys.path.append(os.getcwd()+"/enemigos/clases/")
+import utilidades as util
+from enemigo_base import Enemigo_base
 class Esmad(Enemigo_base):
     def __init__(self,pos):
         super().__init__(pos)

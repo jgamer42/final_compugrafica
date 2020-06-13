@@ -14,9 +14,6 @@ pg.init()
 jugadores = pg.sprite.Group()
 enemigos = pg.sprite.Group()
 bloques = pg.sprite.Group()
-
-jugador = Jugador([128 + 1,ALTO-128 - 1])
-jugadores.add(jugador)
 enemigo = Esmad([500,500])
 o = Observador_base(enemigo,5)
 
@@ -36,7 +33,6 @@ if __name__ == "__main__":
     pg.display.set_caption("CapuchoMAN")
 
     sonidos = Mezclador()
-
     while estados["jugando"]:
         while estados["inicio"] and estados["jugando"]:
             for evento in pg.event.get():
@@ -46,7 +42,6 @@ if __name__ == "__main__":
                 else:
                     sonidos.update(estados)
                     estados["jugando"] = menu.inicio(ventana,opInicio,estados,pg.mouse.get_pos(),pg.mouse.get_pressed(),sonidos)
-
         jugador = Jugador([128 + 1,ALTO-128 - 1])
         jugadores.add(jugador)
         while estados["nivel1"] and estados["jugando"]:
@@ -58,7 +53,7 @@ if __name__ == "__main__":
             jugador.bloques = bloques
             elementos_dibujar = [jugadores,bloques,enemigos]
             amb.ciclo_juego(ventana,elementos_dibujar)
-            onidos.update(estados)
+            sonidos.update(estados)
             game_over = jugador.game_over
             if game_over:
                 niveles["nivel1"] = False

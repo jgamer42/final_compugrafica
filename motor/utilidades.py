@@ -2,13 +2,11 @@ import json
 import os
 import sys
 from xml.dom import minidom
-
+sys.path.append(os.getcwd() + "/bloque/clases/")
+sys.path.append(os.getcwd() + "/motor/")
 import pygame
 from bloque_base import Bloque_base
 from constantes import *
-
-sys.path.append(os.getcwd() + "/bloque/clases/")
-sys.path.append(os.getcwd() + "/motor/")
 
 
 
