@@ -22,6 +22,7 @@ class Icono(pg.sprite.Sprite):
 fondo = pg.image.load("./menu/Inicio.png")
 history = pg.image.load("./Historia/Historia.png")
 history2 = pg.image.load("./Historia/Historia2.png")
+history3 = pg.image.load("./Historia/Historia3.png")
 iconos = pg.sprite.Group()
 
 IconoJugar = pg.image.load("./menu/IconoJugar.png")
@@ -89,6 +90,9 @@ def inicio(ventana,estados,mouse,click,sonidos,evento):
         ventana.blit(history2, [645,38])
         if (evento.type == pg.KEYDOWN):
             if (evento.key == pg.K_RIGHT):
+                #ventana.fill(NEGRO)
+                #ventana.blit(history3, [20,38])
+            if (evento.key == pg.K_LEFT):
                 estados["inicio"] = False
                 estados["nivel1"] = True
     else:
