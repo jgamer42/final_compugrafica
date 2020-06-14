@@ -16,9 +16,7 @@ El evento se pondrá en cola cada vez que termine la música, no solo la primera
 
 class Mezclador():
     def __init__(self):
-        self.playList = [pg.mixer.music.load("./sonidos/rock1.ogg"),
-                        pg.mixer.music.load("./sonidos/rock2.ogg"),
-                        pg.mixer.music.load("./sonidos/rock3.ogg")]
+        self.playList = [pg.mixer.music.load("./sonidos/rock1.ogg"),pg.mixer.music.load("./sonidos/rock2.ogg"),pg.mixer.music.load("./sonidos/rock3.ogg")]
         self.musicMenu = pg.mixer.Sound("./sonidos/menu.ogg")
         self.sonidoClick = pg.mixer.Sound('./sonidos/Click.ogg')
         self.flagMenu = True

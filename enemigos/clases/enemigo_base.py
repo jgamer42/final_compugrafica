@@ -25,6 +25,7 @@ class  Enemigo_base(pygame.sprite.Sprite):
 
     def agregar_observador(self,observador):
         self.lista_observadores.append(observador)
+        return(self)
 
     def update(self):
         if self.en_camara():

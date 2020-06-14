@@ -3,8 +3,7 @@ import motor.ambiente as amb
 import motor.globales as globales
 import motor.utilidades as util
 import pygame as pg
-from enemigos.clases.esmad import Esmad
-from enemigos.clases.observador_base import Observador_base
+from enemigos.clases.fabrica import Fabrica
 from jugador.clases.jugador import Jugador
 from motor.constantes import *
 from sonidos.sonidos import *
@@ -14,12 +13,6 @@ pg.init()
 jugadores = pg.sprite.Group()
 enemigos = pg.sprite.Group()
 bloques = pg.sprite.Group()
-enemigo = Esmad([500,500])
-o = Observador_base(enemigo,5)
-
-enemigos.add(enemigo)
-
-
 reloj = pg.time.Clock()
 estados = {"jugando": True, "inicio": True, "nivel1": False, "nivel2": False, "creditos": False, "opciones": False, "historia": False,"opciones": False, "creditos": False}
 game_over = False
@@ -33,14 +26,20 @@ if __name__ == "__main__":
 
     sonidos = Mezclador()
     while estados["jugando"]:
+
         while estados["inicio"] and estados["jugando"]:
             for evento in pg.event.get():
+                #PARAMETRIZAR ESTO EN UNA FUNCION
                 if evento.type == pg.QUIT:
                     estados["jugando"] = False
                     estados["inicio"] = False
                 else:
                     sonidos.update(estados)
+                    #ES MEJOR CREAR EL MENU COMO OBJETO Y NO COMO ESTATICO
                     estados["jugando"] = menu.inicio(ventana,estados,pg.mouse.get_pos(),pg.mouse.get_pressed(),sonidos,evento)
+        #PARAMETRIZAR ESTO EN UN CONSTRUCTOR O UNA FUNCION
+        creador_enemigos = Fabrica()
+        creador_enemigos.crear_enemigo(1,enemigos,[500,0])
         jugador = Jugador([128 + 1,ALTO-128 - 1])
         jugadores.add(jugador)
         while estados["nivel1"] and estados["jugando"]:
@@ -54,9 +53,10 @@ if __name__ == "__main__":
             amb.ciclo_juego(ventana,elementos_dibujar)
             sonidos.update(estados)
             game_over = jugador.game_over
+            #ESTO NO PUEDE IR AHI :C
             if game_over:
-                niveles["nivel1"] = False
-                niveles["inicio"] = True
+                estados["nivel1"] = False
+                estados["inicio"] = True
                 game_over = False
                 jugadores.remove(jugador)
             reloj.tick(FPS)
