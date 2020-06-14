@@ -21,7 +21,7 @@ enemigos.add(enemigo)
 
 
 reloj = pg.time.Clock()
-estados = {"jugando": True, "inicio": True, "nivel1": False, "nivel2": False, "creditos": False, "opciones": False}
+estados = {"jugando": True, "inicio": True, "nivel1": False, "nivel2": False, "creditos": False, "opciones": False, "historia": False}
 opInicio = {"opciones": False, "creditos": False}
 game_over = False
 

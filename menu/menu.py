@@ -20,7 +20,8 @@ class Icono(pg.sprite.Sprite):
 
 #pg.mixer.init()
 fondo = pg.image.load("./menu/Inicio.png")
-
+history = pg.image.load("./Historia/Historia.png")
+history2 = pg.image.load("./Historia/Historia2.png")
 iconos = pg.sprite.Group()
 
 IconoJugar = pg.image.load("./menu/IconoJugar.png")
@@ -82,6 +83,16 @@ def inicio(ventana,opInicio,estados,mouse,click,sonidos):
                     ventana.blit(IconoSonidoOFF,[506,559])
     elif opInicio["creditos"]:
         pass
+    elif estados["historia"]:
+        ventana.fill(NEGRO)
+        ventana.blit(history, [20,38])
+        ventana.blit(history2, [645,38])
+        for evento in pg.event.get():
+            if (evento.type == pg.KEYDOWN):
+                if (evento.key == pg.K_RIGHT):
+                    print("Jugar")
+                    estados["inicio"] = False
+                    estados["nivel1"] = True
     else:
         ventana.fill(NEGRO)
         ventana.blit(fondo,[0,0])
@@ -89,8 +100,7 @@ def inicio(ventana,opInicio,estados,mouse,click,sonidos):
             if click[0] == 1:
                 sonidos.click()
                 ventana.blit(IconoJugar,[917,297])
-                estados["inicio"] = False
-                estados["nivel1"] = True
+                estados["historia"] = True
             else:
                 ventana.blit(IconoJugar,[917,297])
         elif opciones.rect.collidepoint(mouse):
