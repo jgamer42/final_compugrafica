@@ -21,8 +21,7 @@ enemigos.add(enemigo)
 
 
 reloj = pg.time.Clock()
-estados = {"jugando": True, "inicio": True, "nivel1": False, "nivel2": False, "creditos": False, "opciones": False, "historia": False}
-opInicio = {"opciones": False, "creditos": False}
+estados = {"jugando": True, "inicio": True, "nivel1": False, "nivel2": False, "creditos": False, "opciones": False, "historia": False,"opciones": False, "creditos": False}
 game_over = False
 
 if __name__ == "__main__":
@@ -41,7 +40,7 @@ if __name__ == "__main__":
                     estados["inicio"] = False
                 else:
                     sonidos.update(estados)
-                    estados["jugando"] = menu.inicio(ventana,opInicio,estados,pg.mouse.get_pos(),pg.mouse.get_pressed(),sonidos)
+                    estados["jugando"] = menu.inicio(ventana,estados,pg.mouse.get_pos(),pg.mouse.get_pressed(),sonidos,evento)
         jugador = Jugador([128 + 1,ALTO-128 - 1])
         jugadores.add(jugador)
         while estados["nivel1"] and estados["jugando"]:

@@ -51,8 +51,8 @@ IconoSonidoOFF = pg.image.load("./menu/iconoSonidoOFF.png")
 sonido = Icono([506,559], IconoSonidoOFF)
 iconos.add(sonido)
 
-def inicio(ventana,opInicio,estados,mouse,click,sonidos):
-    if opInicio["opciones"]:
+def inicio(ventana,estados,mouse,click,sonidos,evento):
+    if estados["opciones"]:
         ventana.fill(NEGRO)
         if sonidos.getMudo():
             ventana.blit(FondContr,[0,0])
@@ -63,7 +63,7 @@ def inicio(ventana,opInicio,estados,mouse,click,sonidos):
             if click[0] == 1:
                 sonidos.click()
                 ventana.blit(IconoAceptar,[992,602])
-                opInicio["opciones"] = False
+                estados["opciones"] = False
             else:
                 ventana.blit(IconoAceptar,[992,602])
         elif sonido.rect.collidepoint(mouse):
@@ -81,18 +81,16 @@ def inicio(ventana,opInicio,estados,mouse,click,sonidos):
                     sonidos.mudo()
                 else:
                     ventana.blit(IconoSonidoOFF,[506,559])
-    elif opInicio["creditos"]:
+    elif estados["creditos"]:
         pass
     elif estados["historia"]:
         ventana.fill(NEGRO)
         ventana.blit(history, [20,38])
         ventana.blit(history2, [645,38])
-        for evento in pg.event.get():
-            if (evento.type == pg.KEYDOWN):
-                if (evento.key == pg.K_RIGHT):
-                    print("Jugar")
-                    estados["inicio"] = False
-                    estados["nivel1"] = True
+        if (evento.type == pg.KEYDOWN):
+            if (evento.key == pg.K_RIGHT):
+                estados["inicio"] = False
+                estados["nivel1"] = True
     else:
         ventana.fill(NEGRO)
         ventana.blit(fondo,[0,0])
@@ -107,14 +105,14 @@ def inicio(ventana,opInicio,estados,mouse,click,sonidos):
             if click[0] == 1:
                 sonidos.click()
                 ventana.blit(IconoOpciones,[917,389])
-                opInicio["opciones"] = True
+                estados["opciones"] = True
             else:
                 ventana.blit(IconoOpciones,[917,389])
         elif creditos.rect.collidepoint(mouse):
             if click[0] == 1:
                 sonidos.click()
                 ventana.blit(IconoCreditos,[917,482])
-                opInicio["creditos"] = True
+                estados["creditos"] = True
             else:
                 ventana.blit(IconoCreditos,[917,482])
         elif salir.rect.collidepoint(mouse):
