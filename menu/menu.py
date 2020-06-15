@@ -1,11 +1,11 @@
 import os
 import sys
-
 import pygame as pg
+sys.path.append(os.getcwd() + "/motor/")
 from motor.constantes import *
 from motor.utilidades import *
 
-sys.path.append(os.getcwd() + "/motor/")
+
 
 pygame.init()
 
@@ -88,11 +88,11 @@ def inicio(ventana,estados,mouse,click,sonidos,evento):
         ventana.fill(NEGRO)
         ventana.blit(history, [20,38])
         ventana.blit(history2, [645,38])
-        if (evento.type == pg.KEYDOWN):
-            if (evento.key == pg.K_RIGHT):
-                #ventana.fill(NEGRO)
-                #ventana.blit(history3, [20,38])
-            if (evento.key == pg.K_LEFT):
+        if evento.type == pg.KEYDOWN:
+            if evento.key == pg.K_RIGHT:
+                ventana.fill(NEGRO)
+                ventana.blit(history3, [20,38])
+            if evento.key == pg.K_LEFT:
                 estados["inicio"] = False
                 estados["nivel1"] = True
     else:

@@ -29,8 +29,8 @@ class  Enemigo_base(pygame.sprite.Sprite):
 
     def update(self):
         if self.en_camara():
-            self.rect.x += self.velx*self.direccion
-            self.rect.y += self.vely*self.direccion
+            self.rect.x += self.velx*self.direccion + globales.velx_entorno
+            self.rect.y += self.vely*self.direccion + globales.vely_entorno
             self.animar()
             self.notificar()
         else:

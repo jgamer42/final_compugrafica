@@ -113,7 +113,7 @@ class Jugador(pygame.sprite.Sprite):
             if self.choque == True:
                 globales.velx_entorno = 0
             else:
-                if self.rect.x <= 0 or self.rect.right >= ANCHO - 64 * 10:
+                if self.rect.x <= 0 or self.rect.right >= ANCHO - 64 * 5:
                     self.velx = 0
                     globales.velx_entorno = -10 * self.direccion
                     if self.rect.x < 0 :
