@@ -1,7 +1,7 @@
 # configuracion de ambiente
 ANCHO = 1280
 ALTO = 704
-GRAVEDAD = 5
+GRAVEDAD = 3
 FPS  = 30
 # colores
 NEGRO = [0, 0, 0]

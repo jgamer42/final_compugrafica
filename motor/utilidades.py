@@ -2,11 +2,13 @@ import json
 import os
 import sys
 from xml.dom import minidom
-sys.path.append(os.getcwd() + "/bloque/clases/")
-sys.path.append(os.getcwd() + "/motor/")
+
 import pygame
 from bloque_base import Bloque_base
 from constantes import *
+
+sys.path.append(os.getcwd() + "/bloque/clases/")
+sys.path.append(os.getcwd() + "/motor/")
 
 
 
@@ -97,11 +99,12 @@ def leer_config_imagen(dir_xml):
     return(sprites)
 
 def cargar_mapa(matriz_mapa,dimensiones_mapa,ancho_recorte,alto_recorte,sprites,receptor):
+    #print(len(sprites))
     con = 0
     for i in range(dimensiones_mapa[0]):
         for j in range(dimensiones_mapa[1]):
             if matriz_mapa[con] != 0:
-                # obtiene el sprite de la lista de sprites
+                #print([matriz_mapa[con] - 1])# obtiene el sprite de la lista de sprites
                 sprite_cuadro = sprites[matriz_mapa[con] - 1]
                 pos_x = ancho_recorte * j
                 pos_y = alto_recorte * i
@@ -109,16 +112,16 @@ def cargar_mapa(matriz_mapa,dimensiones_mapa,ancho_recorte,alto_recorte,sprites,
                 if matriz_mapa[con] in matriz_muros:
                     bloque = Bloque_base(pos, sprite_cuadro)
                     bloque.tipo = "muro"
-                    receptor.add(bloque)
+                    receptor["bloques"].add(bloque)
+                elif matriz_mapa[con] in matriz_bonus:
+                    bono = Bloque_base(pos,sprite_cuadro)
+                    bono.tipo = "bono"
+                    receptor["bonos"].add(bono)
                 '''
                 elif matriz_mapa[con] in matriz_enemigos:
                     enemigo = Enemigo(pos, sprite_cuadro)
                     enemigo.tipo = "enemigo"
                     enemigos.add(enemigo)
-                elif matriz_mapa[con] in matriz_bonus:
-                    bono = Bono(pos,sprite_cuadro)
-                    bono.tipo = "bono"
-                    bonos.add(bono)
                 elif matriz_mapa[con] in matriz_ambientales:
                     elemento = Ambiental(pos,sprite_cuadro)
                     elemento.tipo = "ambiente"

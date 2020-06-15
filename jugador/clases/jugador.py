@@ -34,7 +34,6 @@ class Jugador(pygame.sprite.Sprite):
         self.vely = 0
         self.saltando = False
         self.bloques = None
-        self.choque = False
         self.game_over = False
 
     def update(self):
@@ -42,16 +41,12 @@ class Jugador(pygame.sprite.Sprite):
         self.colision_x()
         self.rect.y += self.vely
         self.colision_y()
-        #ESTO NO PUEDE IR AQUI 
-        if self.rect.bottom > ALTO:
-            self.vidas -= 1
-            if self.vidas == 0:
-                self.game_over = True
+        self.checkGameOver()
         self.comportamiento_limites()
         self.frame = animar(self.frame, 28, self.direccion)
         self.image = self.animacion[self.aux_animacion][self.frame]
         self.mask = pygame.mask.from_surface(self.image)
-    
+
     def colision_x(self):
         lista_colision = pygame.sprite.spritecollide(self,self.bloques,False,pygame.sprite.collide_mask)
         if len(lista_colision) > 0:
@@ -82,13 +77,13 @@ class Jugador(pygame.sprite.Sprite):
                         self.rect.bottom = colision.rect.top
                         self.vely = 0
                         if colision.tipo == "pinchos" or colision.tipo == "lava":
-                            self.salud -= colision.daño 
+                            self.salud -= colision.daño
                 elif self.vely < 0:
                     if self.rect.top < colision.rect.bottom:
                         self.rect.top = colision.rect.bottom
                         self.vely = 0
                         if colision.tipo == "pinchos" :
-                            self.salud -= colision.daño 
+                            self.salud -= colision.daño
         else:
             ambiente.gravedad(self)
 
@@ -104,20 +99,33 @@ class Jugador(pygame.sprite.Sprite):
         self.image = self.animacion[self.aux_animacion][self.frame]
         self.mask = pygame.mask.from_surface(self.image)
 
+    def checkGameOver(self):
+        if self.rect.bottom > ALTO:
+            self.vidas -= 1
+            if self.vidas == 0:
+                self.game_over = True
+
+    def checkSalud(self):
+        pass
 
     def comportamiento_limites(self):
-        if self.choque == True:
-            globales.velx_entorno = 0
-        else:
-            if self.rect.x <= 0 or self.rect.right >= ANCHO - 64 * 4:
-                self.velx = 0
-                globales.velx_entorno = -10 * self.direccion
-                if self.rect.x < 0 :
-                    self.rect.x = 0
-                elif self.rect.right > ANCHO:
-                    self.rect.right = ANCHO
-            else:
+        if self.moverCamara():
+            if self.choque == True:
                 globales.velx_entorno = 0
+            else:
+                if self.rect.x <= 0 or self.rect.right >= ANCHO - 64 * 10:
+                    self.velx = 0
+                    globales.velx_entorno = -10 * self.direccion
+                    if self.rect.x < 0 :
+                        self.rect.x = 0
+                    elif self.rect.right > ANCHO:
+                        self.rect.right = ANCHO
+                else:
+                    globales.velx_entorno = 0
+
+    def moverCamara(self):
+        #se debe evaluar si el fondo esta al limite
+        return True
 
     def controles(self,keys):
         if not keys[pygame.K_a] or not keys[pygame.K_d]:
@@ -139,7 +147,7 @@ class Jugador(pygame.sprite.Sprite):
                 self.velx = 8
         if keys[pygame.K_SPACE]:
             if not self.saltando:
-                self.vely = -50
+                self.vely = -36
                 self.saltando = True
 
     def crear_animacion(self):

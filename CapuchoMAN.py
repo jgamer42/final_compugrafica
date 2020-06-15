@@ -13,12 +13,16 @@ pg.init()
 jugadores = pg.sprite.Group()
 enemigos = pg.sprite.Group()
 bloques = pg.sprite.Group()
+bonus = pg.sprite.Group()
+
 reloj = pg.time.Clock()
 estados = {"jugando": True, "inicio": True, "nivel1": False, "nivel2": False, "creditos": False, "opciones": False, "historia": False,"opciones": False, "creditos": False}
 game_over = False
 
+grupoSprite = {"bloques":bloques,"bonos":bonus}
+
 if __name__ == "__main__":
-    util.leer_mapa("mapa/mapaA1.json",bloques)
+    util.leer_mapa("mapa/mapaA1.json",grupoSprite)
     ventana = pg.display.set_mode([ANCHO,ALTO])
     icono_juego = pg.image.load('CapuchoMAN.png')
     pg.display.set_icon(icono_juego)
@@ -49,7 +53,7 @@ if __name__ == "__main__":
                     estados["nivel1"] = False
                 jugador.controles(pg.key.get_pressed())
             jugador.bloques = bloques
-            elementos_dibujar = [jugadores,bloques,enemigos]
+            elementos_dibujar = [jugadores,bloques,enemigos,bonus]
             amb.ciclo_juego(ventana,elementos_dibujar)
             sonidos.update(estados)
             game_over = jugador.game_over
