@@ -29,24 +29,23 @@ if __name__ == "__main__":
     pg.display.set_icon(icono_juego)
     pg.display.set_caption("CapuchoMAN")
 
+    jugador = Jugador([128 + 1,ALTO-128 - 1],bloques)
+    jugadores.add(jugador)
+    gui = GUI(jugador,ventana)
+
     sonidos = Mezclador()
     while estados["jugando"]:
 
         while estados["inicio"] and estados["jugando"]:
             for evento in pg.event.get():
-                #PARAMETRIZAR ESTO EN UNA FUNCION
                 if evento.type == pg.QUIT:
                     estados["jugando"] = False
                     estados["inicio"] = False
                 else:
                     sonidos.update(estados)
-                    #ES MEJOR CREAR EL MENU COMO OBJETO Y NO COMO ESTATICO
                     estados["jugando"] = menu.inicio(ventana,estados,pg.mouse.get_pos(),pg.mouse.get_pressed(),sonidos)
 
-        #PARAMETRIZAR ESTO EN UN CONSTRUCTOR O UNA FUNCION
-        jugador = Jugador([128 + 1,ALTO-128 - 1],bloques)
-        jugadores.add(jugador)
-        gui = GUI(jugador,ventana)
+
         while estados["nivel1"] and estados["jugando"]:
             for evento in pg.event.get():
                 if evento.type == pg.QUIT:
@@ -55,9 +54,13 @@ if __name__ == "__main__":
                 jugador.controles(pg.key.get_pressed())
             elementos_dibujar = [jugadores,bloques,enemigos,bonus]
             amb.ciclo_juego(ventana,elementos_dibujar,gui)
-
-            sonidos.update(estados)
             jugador.checkGameOver(gameOver,estados)
+            gui.checkEstado(gameOver)
+            sonidos.update(estados)
             reloj.tick(FPS)
-        jugadores.remove(jugador)
+
+    print(globales.vely_entorno)
+    print(globales.x_fondo)
+
+
     pg.quit()

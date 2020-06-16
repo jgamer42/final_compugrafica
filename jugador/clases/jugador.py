@@ -34,7 +34,9 @@ class Jugador(pygame.sprite.Sprite):
         self.vely = 0
         self.saltando = False
         self.bloques = bloques
-        self.game_over = False
+
+        self.time = None
+
 
     def update(self):
         self.rect.x += self.velx
@@ -42,6 +44,7 @@ class Jugador(pygame.sprite.Sprite):
         self.rect.y += self.vely
         self.colision_y()
         self.comportamiento_limites()
+        self.checkVidas()
         self.frame = animar(self.frame, 28, self.direccion)
         self.image = self.animacion[self.aux_animacion][self.frame]
         self.mask = pygame.mask.from_surface(self.image)
@@ -91,13 +94,17 @@ class Jugador(pygame.sprite.Sprite):
         self.image = self.animacion[self.aux_animacion][self.frame]
         self.mask = pygame.mask.from_surface(self.image)
 
-    def checkGameOver(self,gameOver,estados):
-        if self.rect.bottom > ALTO + 100:
+
+    def checkVidas(self):
+        if (self.rect.bottom > ALTO + 100) or (self.time == '0:00'):
             self.vidas -= 1
-            if self.vidas == 0:
-                gameOver = True
-                estados["nivel1"] = False
-                estados["inicio"] = True
+
+    def checkGameOver(self,gameOver,estados):
+        if self.vidas == 0:
+            gameOver = True
+            estados["nivel1"] = False
+            estados["inicio"] = True
+            self.reiniciar()
 
     #Esto es la camara
     def comportamiento_limites(self):
@@ -153,3 +160,26 @@ class Jugador(pygame.sprite.Sprite):
 
     def restarVida(self,cantidad):
         jugador.vida -= cantidad
+
+    def setTime(self,time):
+        self.time = time
+
+    def reiniciar(self):
+        self.vidas = 3
+        self.salud = 1000
+        self.puntos = 0
+        self.frame = 0
+        self.direccion = 0
+        self.aux_animacion = 0
+        self.rect.x = self.posInicial[0]
+        self.rect.y = self.posInicial[1]
+        self.velx = 0
+        self.vely = 0
+        self.saltando = False
+
+        #velx_entorno = 0
+        #vely_entorno = 0
+        #x_fondo = 0
+        #y_fondo = 0
+
+        #las globales no funcionan

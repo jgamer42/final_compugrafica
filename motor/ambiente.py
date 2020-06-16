@@ -9,7 +9,7 @@ sys.path.append(os.getcwd() + "/motor/")
 fondos_mapas = {"mapaA1Fondo":pygame.image.load("mapa/mapaA1Fondo.png")}
 balas_enemigos = None
 
-def ciclo_juego(ventana, elementos_dibujar,gui):
+def ciclo_juego(ventana,elementos_dibujar,gui):
     global fondos_mapas
     global balas_enemigos
     ventana.fill(NEGRO)
