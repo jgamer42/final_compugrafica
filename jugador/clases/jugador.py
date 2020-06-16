@@ -14,11 +14,11 @@ sys.path.append(os.getcwd() + "/motor/")
 
 
 class Jugador(pygame.sprite.Sprite):
-    def __init__(self, pos):
+    def __init__(self, pos, bloques):
         super().__init__()
         self.posInicial = pos
         self.tipo = "jugador"
-        self.vidas = 1
+        self.vidas = 3
         self.salud = 1000
         self.puntos = 0
         self.animacion = self.crear_animacion()
@@ -33,7 +33,7 @@ class Jugador(pygame.sprite.Sprite):
         self.velx = 0
         self.vely = 0
         self.saltando = False
-        self.bloques = None
+        self.bloques = bloques
         self.game_over = False
 
     def update(self):
@@ -41,7 +41,6 @@ class Jugador(pygame.sprite.Sprite):
         self.colision_x()
         self.rect.y += self.vely
         self.colision_y()
-        self.checkGameOver()
         self.comportamiento_limites()
         self.frame = animar(self.frame, 28, self.direccion)
         self.image = self.animacion[self.aux_animacion][self.frame]
@@ -87,27 +86,20 @@ class Jugador(pygame.sprite.Sprite):
         else:
             ambiente.gravedad(self)
 
-
-        if self.rect.bottom > ALTO:
-            self.vidas -= 1
-            if self.vidas == 0:
-                self.game_over = True
-                #self.reiniciar()
-
         self.comportamiento_limites()
         self.frame = animar(self.frame, 28, self.direccion)
         self.image = self.animacion[self.aux_animacion][self.frame]
         self.mask = pygame.mask.from_surface(self.image)
 
-    def checkGameOver(self):
-        if self.rect.bottom > ALTO:
+    def checkGameOver(self,gameOver,estados):
+        if self.rect.bottom > ALTO + 100:
             self.vidas -= 1
             if self.vidas == 0:
-                self.game_over = True
+                gameOver = True
+                estados["nivel1"] = False
+                estados["inicio"] = True
 
-    def checkSalud(self):
-        pass
-
+    #Esto es la camara
     def comportamiento_limites(self):
         if self.moverCamara():
             if self.choque == True:
@@ -155,3 +147,9 @@ class Jugador(pygame.sprite.Sprite):
         animacion.append(crear_sprite("./jugador/sprites/derecha.png", [41,60], 6, 5))
         animacion.append(crear_sprite("./jugador/sprites/izquierda.png", [41,60], 6, 5))
         return animacion
+
+    def sumarPuntos(self,puntos):
+        jugador.puntos += puntos
+
+    def restarVida(self,cantidad):
+        jugador.vida -= cantidad

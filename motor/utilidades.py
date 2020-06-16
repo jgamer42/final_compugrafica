@@ -1,15 +1,17 @@
 import os
 import sys
+
 import pygame
+from constantes import *
+
 sys.path.append(os.getcwd() + "/motor/")
 
-from constantes import *
 
 def crear_sprite(dir_sabana, dimensiones, columnas, filas=1, opcion=None):
     """
     Funcion para recorte de sprites
     sabana: imagen con los graficos
-    dimensiones: lista con ancho y alto [ancho,alto] del recorte
+    dimensiones: [ancho,alto] del recorte
     columnas: cantidad de columnas que tiene la sabana
     filas: filas de la sabana (default 1)
     opcion: optiene una matriz con el parametro "matriz" (default None)
@@ -54,5 +56,3 @@ def animar(frame_actual, numero_frames,direccion):
         else:
             frame_actual = (numero_frames - 1)
         return frame_actual
-
-

@@ -1,9 +1,11 @@
 import os
 import sys
+
 import pygame as pg
-sys.path.append(os.getcwd() + "/motor/")
 from motor.constantes import *
 from motor.utilidades import *
+
+sys.path.append(os.getcwd() + "/motor/")
 
 
 
@@ -52,7 +54,8 @@ IconoSonidoOFF = pg.image.load("./menu/iconoSonidoOFF.png")
 sonido = Icono([506,559], IconoSonidoOFF)
 iconos.add(sonido)
 
-def inicio(ventana,estados,mouse,click,sonidos,evento):
+
+def inicio(ventana,estados,mouse,click,sonidos):
     if estados["opciones"]:
         ventana.fill(NEGRO)
         if sonidos.getMudo():
@@ -70,31 +73,20 @@ def inicio(ventana,estados,mouse,click,sonidos,evento):
         elif sonido.rect.collidepoint(mouse):
             if sonidos.getMudo():
                 if click[0] == 1:
-                    ventana.blit(IconoSonidoON,[506,559])
+                    #ventana.blit(IconoSonidoON,[506,559])
                     sonidos.click()
                     sonidos.mudo()
                 else:
                     ventana.blit(IconoSonidoON,[506,559])
             else:
                 if click[0] == 1:
-                    ventana.blit(IconoSonidoOFF,[506,559])
+                    #ventana.blit(IconoSonidoOFF,[506,559])
                     sonidos.click()
                     sonidos.mudo()
                 else:
                     ventana.blit(IconoSonidoOFF,[506,559])
     elif estados["creditos"]:
         pass
-    elif estados["historia"]:
-        ventana.fill(NEGRO)
-        ventana.blit(history, [20,38])
-        ventana.blit(history2, [645,38])
-        if evento.type == pg.KEYDOWN:
-            if evento.key == pg.K_RIGHT:
-                ventana.fill(NEGRO)
-                ventana.blit(history3, [20,38])
-            if evento.key == pg.K_LEFT:
-                estados["inicio"] = False
-                estados["nivel1"] = True
     else:
         ventana.fill(NEGRO)
         ventana.blit(fondo,[0,0])
@@ -102,7 +94,8 @@ def inicio(ventana,estados,mouse,click,sonidos,evento):
             if click[0] == 1:
                 sonidos.click()
                 ventana.blit(IconoJugar,[917,297])
-                estados["historia"] = True
+                estados["inicio"] = False
+                estados["nivel1"] = True
             else:
                 ventana.blit(IconoJugar,[917,297])
         elif opciones.rect.collidepoint(mouse):
@@ -129,3 +122,11 @@ def inicio(ventana,estados,mouse,click,sonidos,evento):
                 ventana.blit(IconoSalir,[917,575])
     pg.display.flip()
     return True
+
+'''
+
+    ventana.blit(history, [20,38])
+    ventana.blit(history2, [645,38])
+    ventana.blit(history3, [20,38])
+
+    '''

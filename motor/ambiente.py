@@ -6,19 +6,20 @@ import pygame
 from constantes import *
 
 sys.path.append(os.getcwd() + "/motor/")
-#fondos_mapas = {"mapaA1":pygame.image.load("mapa/mapaA1.png")}
+fondos_mapas = {"mapaA1Fondo":pygame.image.load("mapa/mapaA1Fondo.png")}
 balas_enemigos = None
 
-def ciclo_juego(ventana, elementos_dibujar):
+def ciclo_juego(ventana, elementos_dibujar,gui):
     global fondos_mapas
     global balas_enemigos
     ventana.fill(NEGRO)
-    #ventana.blit(fondos_mapas["mapaA1"],velocidad_fondo())
+    ventana.blit(fondos_mapas["mapaA1Fondo"],velocidad_fondo())
     #print(balas_enemigos)
     #print(len(balas_enemigos))
     for grupo_sprites in elementos_dibujar:
         grupo_sprites.update()
         grupo_sprites.draw(ventana)
+    gui.update()
     pygame.display.flip()
 
 def velocidad_fondo():
