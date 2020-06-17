@@ -1,9 +1,7 @@
-
 import pygame as pg
 import os
 import sys
 import ambiente
-
 from constantes import *
 from utilidades import *
 
@@ -100,3 +98,4 @@ class GUI():
             self.min = 1
             self.time = None
             self.jugador.setTime(self.time)
+

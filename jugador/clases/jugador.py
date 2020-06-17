@@ -36,7 +36,7 @@ class Jugador(pygame.sprite.Sprite):
         self.bloques = bloques
         self.bonus = bonus
         self.time = None
-        
+
     def update(self):
         self.rect.x += self.velx
         self.colision_x()
@@ -103,10 +103,12 @@ class Jugador(pygame.sprite.Sprite):
 
     def checkEstado(self):
         if (self.rect.bottom > ALTO + 100) or (self.time == '0:00'):
+
             self.vidas -= 1
         elif self.salud <= 0:
             self.vidas -= 1
             self.salud = 1000
+
     def checkGameOver(self,gameOver,estados):
         if self.vidas == 0:
             gameOver = True
