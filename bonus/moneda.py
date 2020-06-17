@@ -1,6 +1,9 @@
-import os
-import sys
 
+import sys
+import os
+import pygame as pg
+sys.path.append(os.getcwd() + "/motor/")
+import utilidades as util
 import globales
 import pygame as pg
 import utilidades as util

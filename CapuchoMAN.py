@@ -8,6 +8,7 @@ from gui.gui import *
 from jugador.clases.jugador import Jugador
 from motor.constantes import *
 from sonidos.sonidos import *
+from gui.gui import *
 
 pg.init()
 

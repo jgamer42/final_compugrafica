@@ -1,8 +1,9 @@
+
+import pygame as pg
 import os
 import sys
-
 import ambiente
-import pygame as pg
+
 from constantes import *
 from utilidades import *
 
@@ -44,7 +45,6 @@ class GUI():
             self.interfaz.blit(self.numeros[int(decena)],[217,5])
 
         self.interfaz.blit(self.numeros[int(unidad)],[234,5])
-
 
     def drawVida(self):
         if self.jugador.salud > 500 and self.jugador.vidas == 3:
@@ -100,4 +100,3 @@ class GUI():
             self.min = 1
             self.time = None
             self.jugador.setTime(self.time)
-

@@ -36,8 +36,7 @@ class Jugador(pygame.sprite.Sprite):
         self.bloques = bloques
         self.bonus = bonus
         self.time = None
-
-
+        
     def update(self):
         self.rect.x += self.velx
         self.colision_x()
@@ -108,8 +107,6 @@ class Jugador(pygame.sprite.Sprite):
         elif self.salud <= 0:
             self.vidas -= 1
             self.salud = 1000
-
-
     def checkGameOver(self,gameOver,estados):
         if self.vidas == 0:
             gameOver = True
@@ -171,7 +168,6 @@ class Jugador(pygame.sprite.Sprite):
         return animacion
 
     def sumarPuntos(self,puntos):
-
         self.puntos += puntos
 
 
