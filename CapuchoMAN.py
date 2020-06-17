@@ -1,4 +1,5 @@
 import menu.menu as menu
+import historia.historia as historia
 import motor.ambiente as amb
 import motor.globales as globales
 import motor.mapeo as mapa
@@ -18,7 +19,7 @@ bloques = pg.sprite.Group()
 bonus = pg.sprite.Group()
 
 reloj = pg.time.Clock()
-estados = {"jugando": True, "inicio": True, "nivel1": False, "nivel2": False, "creditos": False, "opciones": False, "historia": False,"opciones": False, "creditos": False}
+estados = {"jugando": True, "inicio": True, "nivel1": False, "nivel2": False, "creditos": False, "opciones": False, "historia": False,"opciones": False, "creditos": False, "dialogo1": False, "dialogo2": False}
 gameOver = False
 
 grupoSprite = {"bloques":bloques,"bonos":bonus,"enemigos":enemigos}
@@ -46,7 +47,16 @@ if __name__ == "__main__":
                     estados["inicio"] = False
                 else:
                     sonidos.update(estados)
-                    estados["jugando"] = menu.inicio(ventana,estados,pg.mouse.get_pos(),pg.mouse.get_pressed(),sonidos)
+                    menu.inicio(ventana,estados,pg.mouse.get_pos(),pg.mouse.get_pressed(),sonidos)
+
+        while estados["historia"] and estados["jugando"]:
+            for evento in pg.event.get():
+                if evento.type == pg.QUIT:
+                    estados["jugando"] = False
+                    estados["inicio"] = False
+                else:
+                    sonidos.update(estados)
+                    historia.historia(ventana,estados,pg.mouse.get_pos(),pg.mouse.get_pressed(),sonidos)
 
         while estados["nivel1"] and estados["jugando"]:
             for evento in pg.event.get():

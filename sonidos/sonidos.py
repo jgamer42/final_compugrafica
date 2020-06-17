@@ -8,14 +8,17 @@ class Mezclador():
                         pg.mixer.music.load("./sonidos/rock2.ogg"),
                         pg.mixer.music.load("./sonidos/rock3.ogg")]
         self.musicMenu = pg.mixer.Sound("./sonidos/menu.ogg")
+        self.musicHistoria = pg.mixer.Sound("./sonidos/historia.ogg")
         self.sonidoClick = pg.mixer.Sound('./sonidos/Click.ogg')
         self.grunt = pg.mixer.Sound('./sonidos/grunt.ogg')
         self.flagMenu = True
         self.flagMudo = False
+        self.flagHistoria = True
         self.conPlayList = 0
 
     def update(self,estados):
         self.menu(estados)
+        self.historia(estados)
         self.musica(estados)
 
     def menu(self,estados):
@@ -28,6 +31,17 @@ class Mezclador():
         elif not estados["inicio"]:# and not self.flagMenu:
             self.musicMenu.stop()
             self.flagMenu = True
+
+    def historia(self,estados):
+        if self.flagMudo:
+            self.musicHistoria.stop()
+            self.flagHistoria = True
+        elif estados["historia"] and not self.flagMudo and self.flagHistoria:
+            self.musicHistoria.play(-1)
+            self.flagHistoria = False
+        elif not estados["historia"]:# and not self.flagMenu:
+            self.musicHistoria.stop()
+            self.flagHistoria = True
 
     def click(self):
         self.sonidoClick.play()

@@ -100,7 +100,8 @@ def inicio(ventana,estados,mouse,click,sonidos):
             if click[0] == 1:
                 sonidos.click()
                 estados["inicio"] = False
-                estados["nivel1"] = True
+                estados["historia"] = True
+                estados["dialogo1"] = True
 
         elif opciones.rect.collidepoint(mouse):
             ventana.blit(IconoOpciones,[917,389])
@@ -117,9 +118,8 @@ def inicio(ventana,estados,mouse,click,sonidos):
             if click[0] == 1:
                 sonidos.click()
                 estados["inicio"] = False
-                return False
+                estados["jugando"] = False
     pg.display.flip()
-    return True
 
 '''
 
