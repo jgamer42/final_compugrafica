@@ -1,10 +1,16 @@
 import os
 import sys
+
 import pygame as pg
+from menu.menu import *
+from motor.constantes import *
+
 sys.path.append(os.getcwd() + "/menu/")
 sys.path.append(os.getcwd() + "/motor/")
-from motor.constantes import *
-from menu.menu import *
+
+
+sys.path.append(os.getcwd() + "/menu/")
+sys.path.append(os.getcwd() + "/motor/")
 
 pg.init()
 
@@ -33,6 +39,8 @@ def historia(ventana,estados,mouse,click,sonidos):
             if click[0] == 1:
                 sonidos.click()
                 estados["dialogo1"] = False
+                estados["dialogo2"] = True
+
     elif estados["dialogo2"]:
         ventana.blit(dialogo2, [0,0])
         if aceptar.rect.collidepoint(mouse):

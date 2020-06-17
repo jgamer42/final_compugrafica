@@ -1,5 +1,5 @@
-import menu.menu as menu
 import historia.historia as historia
+import menu.menu as menu
 import motor.ambiente as amb
 import motor.globales as globales
 import motor.mapeo as mapa
@@ -9,7 +9,6 @@ from gui.gui import *
 from jugador.clases.jugador import Jugador
 from motor.constantes import *
 from sonidos.sonidos import *
-from gui.gui import *
 
 pg.init()
 
