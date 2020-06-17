@@ -1,11 +1,11 @@
 import os
 import sys
-
+sys.path.append(os.getcwd() + "/motor/")
 import pygame as pg
 from motor.constantes import *
 from motor.utilidades import *
 
-sys.path.append(os.getcwd() + "/motor/")
+
 
 
 

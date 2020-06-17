@@ -30,14 +30,12 @@ if __name__ == "__main__":
     pg.display.set_icon(icono_juego)
     pg.display.set_caption("CapuchoMAN")
 
-    jugador = Jugador([128 + 1,ALTO-128 - 1],bloques)
+    jugador = Jugador([128 + 1,ALTO-128 - 1],bloques,bonus)
     jugadores.add(jugador)
     gui = GUI(jugador,ventana)
 
     sonidos = Mezclador()
-    jugador = Jugador([128 + 1,ALTO-128 - 1],bloques,bonus)
-    jugadores.add(jugador)
-    gui = GUI(jugador,ventana)
+
 
     while estados["jugando"]:
 
