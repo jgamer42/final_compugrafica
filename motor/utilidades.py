@@ -1,10 +1,8 @@
 import os
 import sys
-
 import pygame
-from constantes import *
-
 sys.path.append(os.getcwd() + "/motor/")
+from constantes import *
 
 
 def crear_sprite(dir_sabana, dimensiones, columnas, filas=1, opcion=None):

@@ -11,6 +11,7 @@ from utilidades import *
 
 sys.path.append(os.getcwd() + "/motor/")
 
+from .molotov import Molotov
 
 class Jugador(pygame.sprite.Sprite):
     def __init__(self, pos, bloques, bonus):
@@ -35,6 +36,7 @@ class Jugador(pygame.sprite.Sprite):
         self.saltando = False
         self.bloques = bloques
         self.bonus = bonus
+        self.molotovs = None
         self.time = None
 
     def update(self):
@@ -103,7 +105,6 @@ class Jugador(pygame.sprite.Sprite):
 
     def checkEstado(self):
         if (self.rect.bottom > ALTO + 100) or (self.time == '0:00'):
-
             self.vidas -= 1
         elif self.salud <= 0:
             self.vidas -= 1
@@ -122,7 +123,7 @@ class Jugador(pygame.sprite.Sprite):
             if self.choque == True:
                 globales.velx_entorno = 0
             else:
-                if self.rect.x <= 0 or self.rect.right >= ANCHO - 64 * 5:
+                if self.rect.x <= 0 or self.rect.right >= ANCHO - 64 * 10:
                     self.velx = 0
                     globales.velx_entorno = -10 * self.direccion
                     if self.rect.x < 0 :
@@ -162,6 +163,8 @@ class Jugador(pygame.sprite.Sprite):
             if not self.saltando:
                 self.vely = -36
                 self.saltando = True
+        if keys[pygame.K_j]:
+            self.disparar()
 
     def crear_animacion(self):
         animacion = []
@@ -171,7 +174,6 @@ class Jugador(pygame.sprite.Sprite):
 
     def sumarPuntos(self,puntos):
         self.puntos += puntos
-
 
     def restarVida(self,cantidad):
         jugador.vida -= cantidad
@@ -198,3 +200,9 @@ class Jugador(pygame.sprite.Sprite):
             for bono in ls_col:
                 self.sumarPuntos(bono.puntos)
                 self.bonus.remove(bono)
+
+    def disparar(self):
+        molotov = Molotov(self.rect.center)
+        self.molotovs.add(molotov)
+        #print("molotov lanzada")
+        print(self.rect.center)

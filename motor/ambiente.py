@@ -43,3 +43,11 @@ def agregar_bala(objeto,fuente):
         #print(balas_enemigos)
         #balas_enemigos.append("hola")
     print(balas_enemigos)
+
+def protector_memoria(elementos):
+    for elemento in elementos:
+        for e in elemento:
+            if(e.rect.bottom <= 0) or (e.rect.top > ALTO):
+                elemento.remove(e)
+            if(e.rect.x <= 0) or (e.rect.x > ANCHO):
+                elemento.remove(e)

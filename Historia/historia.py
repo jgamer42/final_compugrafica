@@ -8,10 +8,6 @@ from motor.constantes import *
 sys.path.append(os.getcwd() + "/menu/")
 sys.path.append(os.getcwd() + "/motor/")
 
-
-sys.path.append(os.getcwd() + "/menu/")
-sys.path.append(os.getcwd() + "/motor/")
-
 pg.init()
 
 icoHistory = pg.sprite.Group()

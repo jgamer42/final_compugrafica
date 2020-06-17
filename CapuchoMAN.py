@@ -16,6 +16,8 @@ jugadores = pg.sprite.Group()
 enemigos = pg.sprite.Group()
 bloques = pg.sprite.Group()
 bonus = pg.sprite.Group()
+molotovs = pg.sprite.Group()
+
 
 reloj = pg.time.Clock()
 estados = {"jugando": True, "inicio": True, "nivel1": False, "nivel2": False, "creditos": False, "opciones": False, "historia": False,"opciones": False, "creditos": False, "dialogo1": False, "dialogo2": False}
@@ -58,19 +60,19 @@ if __name__ == "__main__":
                     historia.historia(ventana,estados,pg.mouse.get_pos(),pg.mouse.get_pressed(),sonidos)
 
         while estados["nivel1"] and estados["jugando"]:
+            jugador.molotovs = molotovs
             for evento in pg.event.get():
                 if evento.type == pg.QUIT:
                     estados["jugando"] = False
                     estados["nivel1"] = False
                 jugador.controles(pg.key.get_pressed())
-            elementos_dibujar = [jugadores,bloques,enemigos,bonus]
+            elementos_borrar = [molotovs]
+            amb.protector_memoria(elementos_borrar)
+            elementos_dibujar = [jugadores,bloques,enemigos,bonus,molotovs]
             amb.ciclo_juego(ventana,elementos_dibujar,gui)
             jugador.checkGameOver(gameOver,estados)
             gui.checkEstado(gameOver)
             sonidos.update(estados)
             reloj.tick(FPS)
-
-    print(globales.vely_entorno)
-    print(globales.x_fondo)
 
     pg.quit()
