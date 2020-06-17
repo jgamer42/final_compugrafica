@@ -9,6 +9,7 @@ class Mezclador():
                         pg.mixer.music.load("./sonidos/rock3.ogg")]
         self.musicMenu = pg.mixer.Sound("./sonidos/menu.ogg")
         self.sonidoClick = pg.mixer.Sound('./sonidos/Click.ogg')
+        self.grunt = pg.mixer.Sound('./sonidos/grunt.ogg')
         self.flagMenu = True
         self.flagMudo = False
         self.conPlayList = 0
@@ -30,6 +31,9 @@ class Mezclador():
 
     def click(self):
         self.sonidoClick.play()
+
+    def grunt(self):
+        self.grunt.play()
 
     def musica(self,estados):
         if estados["nivel1"] or estados["nivel2"]:

@@ -12,11 +12,11 @@ from utilidades import *
 sys.path.append(os.getcwd() + "/motor/")
 
 
-
 class Jugador(pygame.sprite.Sprite):
-    def __init__(self, pos, bloques):
+    def __init__(self, pos, bloques, bonus):
         super().__init__()
         self.posInicial = pos
+        self.grunt = pygame.mixer.Sound('./sonidos/grunt.ogg')
         self.tipo = "jugador"
         self.vidas = 3
         self.salud = 1000
@@ -34,7 +34,7 @@ class Jugador(pygame.sprite.Sprite):
         self.vely = 0
         self.saltando = False
         self.bloques = bloques
-
+        self.bonus = bonus
         self.time = None
 
 
@@ -43,8 +43,10 @@ class Jugador(pygame.sprite.Sprite):
         self.colision_x()
         self.rect.y += self.vely
         self.colision_y()
+
+        self.checkColisiones()
         self.comportamiento_limites()
-        self.checkVidas()
+        self.checkEstado()
         self.frame = animar(self.frame, 28, self.direccion)
         self.image = self.animacion[self.aux_animacion][self.frame]
         self.mask = pygame.mask.from_surface(self.image)
@@ -80,12 +82,18 @@ class Jugador(pygame.sprite.Sprite):
                         self.vely = 0
                         if colision.tipo == "pinchos" or colision.tipo == "lava":
                             self.salud -= colision.daño
+                            print(colision.tipo)
+                            self.grunt.play()
+                            print(self.salud)
                 elif self.vely < 0:
                     if self.rect.top < colision.rect.bottom:
                         self.rect.top = colision.rect.bottom
                         self.vely = 0
-                        if colision.tipo == "pinchos" :
+                        if colision.tipo == "pinchos" or colision.tipo == "lava" :
                             self.salud -= colision.daño
+                            print(colision.tipo)
+                            self.grunt.play()
+                            print(self.salud)
         else:
             ambiente.gravedad(self)
 
@@ -94,10 +102,13 @@ class Jugador(pygame.sprite.Sprite):
         self.image = self.animacion[self.aux_animacion][self.frame]
         self.mask = pygame.mask.from_surface(self.image)
 
-
-    def checkVidas(self):
+    def checkEstado(self):
         if (self.rect.bottom > ALTO + 100) or (self.time == '0:00'):
             self.vidas -= 1
+        elif self.salud <= 0:
+            self.vidas -= 1
+            self.salud = 1000
+
 
     def checkGameOver(self,gameOver,estados):
         if self.vidas == 0:
@@ -121,9 +132,13 @@ class Jugador(pygame.sprite.Sprite):
                         self.rect.right = ANCHO
                 else:
                     globales.velx_entorno = 0
+        else:
+            globales.velx_entorno = 0
 
     def moverCamara(self):
         #se debe evaluar si el fondo esta al limite
+        if self.rect.right + 150 >= 7680 or self.rect.left - 150 <= 0:
+            return False
         return True
 
     def controles(self,keys):
@@ -156,7 +171,9 @@ class Jugador(pygame.sprite.Sprite):
         return animacion
 
     def sumarPuntos(self,puntos):
-        jugador.puntos += puntos
+
+        self.puntos += puntos
+
 
     def restarVida(self,cantidad):
         jugador.vida -= cantidad
@@ -177,9 +194,9 @@ class Jugador(pygame.sprite.Sprite):
         self.vely = 0
         self.saltando = False
 
-        #velx_entorno = 0
-        #vely_entorno = 0
-        #x_fondo = 0
-        #y_fondo = 0
-
-        #las globales no funcionan
+    def checkColisiones(self):
+        ls_col = pygame.sprite.spritecollide(self,self.bonus,False,pygame.sprite.collide_mask)
+        if len(ls_col) > 0:
+            for bono in ls_col:
+                self.sumarPuntos(bono.puntos)
+                self.bonus.remove(bono)

@@ -5,4 +5,4 @@ class Lava(Bloque_base):
     def __init__(self,pos,img=None):
         super().__init__(pos,img)
         self.tipo = "lava"
-        self.daño = 90
+        self.daño = 250

@@ -1,9 +1,11 @@
-import sys 
-import os 
-import pygame as pg 
-sys.path.append(os.getcwd() + "/motor/")
-import utilidades as util 
+import os
+import sys
+
 import globales
+import pygame as pg
+import utilidades as util
+
+sys.path.append(os.getcwd() + "/motor/")
 class Moneda(pg.sprite.Sprite):
     def __init__(self,pos):
         super().__init__()
@@ -14,7 +16,8 @@ class Moneda(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = pos[0]
         self.rect.y = pos[1]
-    
+        self.puntos = 30
+
     def update(self):
         self.frame = util.animar(self.frame,7,1)
         self.image = self.animacion[self.frame]

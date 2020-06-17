@@ -17,14 +17,12 @@ class GUI():
         self.vida = crear_sprite("./gui/vida.png",[33,28],3)
         self.posVidas = [[644,2],[681,2],[718,2]]
         self.jugador = jugador
-
         self.conFPS = 0
         self.seg = 0
         self.min = 1
         self.fuente = pg.font.SysFont('Arial Black',28)
         self.posTime = [1066,-6]
         self.time = None
-
 
     def update(self):
         self.interfaz.blit(self.barra,[0,0])
@@ -39,15 +37,14 @@ class GUI():
         unidad = decena % 10
 
         if int(miles) != 0:
-            ventana.blit(self.numeros[int(miles)],[160,5])
+            self.interfaz.blit(self.numeros[int(miles)],[183,5])
         if int(centena) != 0 or miles > 0:
-            ventana.blit(self.numeros[int(centena)],[177,5])
+            self.interfaz.blit(self.numeros[int(centena)],[200,5])
         if int(decena) != 0 or centena > 0 or miles > 0:
-            ventana.blit(self.numeros[int(decena)],[194,5])
+            self.interfaz.blit(self.numeros[int(decena)],[217,5])
 
-        self.interfaz.blit(self.numeros[int(unidad)],[211,5])
+        self.interfaz.blit(self.numeros[int(unidad)],[234,5])
 
-        pg.display.flip()
 
     def drawVida(self):
         if self.jugador.salud > 500 and self.jugador.vidas == 3:

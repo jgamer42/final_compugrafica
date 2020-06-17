@@ -34,6 +34,10 @@ if __name__ == "__main__":
     gui = GUI(jugador,ventana)
 
     sonidos = Mezclador()
+    jugador = Jugador([128 + 1,ALTO-128 - 1],bloques,bonus)
+    jugadores.add(jugador)
+    gui = GUI(jugador,ventana)
+
     while estados["jugando"]:
 
         while estados["inicio"] and estados["jugando"]:
@@ -44,7 +48,6 @@ if __name__ == "__main__":
                 else:
                     sonidos.update(estados)
                     estados["jugando"] = menu.inicio(ventana,estados,pg.mouse.get_pos(),pg.mouse.get_pressed(),sonidos)
-
 
         while estados["nivel1"] and estados["jugando"]:
             for evento in pg.event.get():
@@ -61,6 +64,5 @@ if __name__ == "__main__":
 
     print(globales.vely_entorno)
     print(globales.x_fondo)
-
 
     pg.quit()
