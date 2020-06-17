@@ -10,8 +10,6 @@ sys.path.append(os.getcwd()+"/enemigos/")
 class Bala_base(pg.sprite.Sprite):
     def __init__(self, pos,direccion):
         super().__init__()
-        print(pos)
-        self.lista_observadores = []
         self.image = pg.Surface([20, 20])
         self.image.fill(ROJO)
         self.rect = self.image.get_rect()
