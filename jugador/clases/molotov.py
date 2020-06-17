@@ -1,12 +1,14 @@
 import os
 import sys
+
 import pygame as pg
-sys.path.append(os.getcwd() + "/motor/")
-sys.path.append(os.getcwd() + "/enemigos/clases/balas/")
+from ambiente import *
 from bala_base import Bala_base
 from constantes import *
-from ambiente import *
 from utilidades import *
+
+sys.path.append(os.getcwd() + "/motor/")
+sys.path.append(os.getcwd() + "/enemigos/clases/balas/")
 
 
 class Molotov(Bala_base):

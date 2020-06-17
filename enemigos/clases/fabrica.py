@@ -1,12 +1,14 @@
 import os
 import sys
-sys.path.append(os.getcwd()+"/enemigos/clases/")
-sys.path.append(os.getcwd()+"/motor/")
+
 from disparar import Disparar
 from esmad import Esmad
+from observador_base import Observador_base
 from perro import Perro
 from zombi import Zombi
-from observador_base import Observador_base
+
+sys.path.append(os.getcwd()+"/enemigos/clases/")
+sys.path.append(os.getcwd()+"/motor/")
 class Fabrica():
     def __init__(self):
         print("fabrica lista")

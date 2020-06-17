@@ -9,9 +9,10 @@ import pygame
 from constantes import *
 from utilidades import *
 
+from .molotov import Molotov
+
 sys.path.append(os.getcwd() + "/motor/")
 
-from .molotov import Molotov
 
 class Jugador(pygame.sprite.Sprite):
     def __init__(self, pos, bloques, bonus):
